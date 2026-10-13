@@ -579,6 +579,9 @@ table.dt tr.clickable:hover{background:var(--bg-muted)}
 /* ───────────────────────────────────────────────────────────────────────
    3i. STAGE 10 — data quality, plan quality, ask
    ─────────────────────────────────────────────────────────────────────── */
+/* A cell with nothing in it because nothing was measured — distinct from one
+   left blank in a source document, which gets .dq-blank's hatching. */
+.na{color:var(--ink-mute);font-style:italic;text-align:center}
 .dq-blank{color:var(--ink-mute);font-style:italic;background:repeating-linear-gradient(
   45deg,transparent,transparent 5px,var(--bg-muted) 5px,var(--bg-muted) 10px)}
 .dq-reg{display:grid;grid-template-columns:1fr 110px 46px;gap:11px;align-items:center;
@@ -750,6 +753,77 @@ table.dt tr.clickable:hover{background:var(--bg-muted)}
   .inb{grid-template-columns:24px minmax(0,1fr)}
   .inb>button{grid-column:2}
   .cfg{grid-template-columns:minmax(0,1fr);gap:3px}
+}
+
+/* ───────────────────────────────────────────────────────────────────────
+   3k. DATA ENTRY — the form kit
+   ─────────────────────────────────────────────────────────────────────── */
+.ent-bar{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;
+  flex-wrap:wrap}
+.ent-bar>div:last-child{display:flex;gap:8px;flex-wrap:wrap;padding-top:2px}
+
+.ef-intro{margin:0 0 16px;font-size:12.5px;line-height:1.7;color:var(--ink-soft)}
+.ef-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px 14px}
+.ef{grid-column:1 / -1;min-width:0}
+.ef.half{grid-column:auto}
+.ef>label{display:block;font:600 10px 'Inter',sans-serif;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--ink-mute);margin-bottom:5px}
+.ef>label i{font-style:normal;color:var(--accent);margin-left:5px;letter-spacing:.04em}
+.ef-hint{font-size:11px;line-height:1.5;color:var(--ink-mute);margin-top:5px}
+.ef-err{font-size:11.5px;line-height:1.5;color:var(--bad);margin-top:5px;font-weight:500}
+.ef.bad input,.ef.bad select,.ef.bad textarea{border-color:var(--bad);
+  background:var(--bad-soft)}
+.ef.bad .ef-scale label,.ef.bad .ef-yn label{border-color:var(--bad)}
+.ef-static{font-size:12.5px;line-height:1.6;color:var(--ink);background:var(--bg-muted);
+  border-radius:9px;padding:9px 12px}
+.ef-head{grid-column:1 / -1;font:600 11px 'Inter',sans-serif;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--brand);padding-top:6px;margin-top:2px;
+  border-top:1px solid var(--line-soft);display:flex;justify-content:space-between;
+  align-items:baseline;gap:10px}
+.ef-head:first-child{border-top:0;padding-top:0;margin-top:0}
+.ef-head span{font:400 11px 'Inter',sans-serif;letter-spacing:0;text-transform:none;
+  color:var(--ink-mute)}
+
+.ef-scale{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.ef-scale label{border:1px solid var(--line);border-radius:9px;padding:8px 6px;text-align:center;
+  cursor:pointer;transition:.12s;background:var(--bg-card)}
+.ef-scale label:hover{border-color:var(--brand)}
+.ef-scale label.on{background:var(--brand-soft);border-color:var(--brand)}
+.ef-scale label input{position:absolute;opacity:0;pointer-events:none}
+.ef-scale label b{display:block;font:700 16px 'Fraunces',serif;color:var(--ink)}
+.ef-scale label.on b{color:var(--brand)}
+.ef-scale label span{display:block;font-size:9.5px;line-height:1.3;color:var(--ink-mute);
+  margin-top:2px}
+
+.ef-yn{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.ef-yn label{border:1px solid var(--line);border-radius:9px;padding:9px 11px;text-align:center;
+  cursor:pointer;font:500 12.5px 'Inter',sans-serif;background:var(--bg-card);transition:.12s}
+.ef-yn label:hover{border-color:var(--brand)}
+.ef-yn label.on{background:var(--brand-soft);border-color:var(--brand);font-weight:600;
+  color:var(--brand)}
+.ef-yn label input{position:absolute;opacity:0;pointer-events:none}
+
+.ef-foot-note{flex:1;font-size:11.5px;color:var(--ink-mute);display:flex;gap:5px;
+  align-items:center;line-height:1.5}
+.ef-cell{width:34px;text-align:center}
+.ef-pencil{background:none;border:1px solid var(--line);border-radius:7px;width:27px;height:27px;
+  color:var(--ink-mute);cursor:pointer;display:inline-grid;place-items:center;font-size:12px;
+  transition:.12s}
+.ef-pencil:hover{border-color:var(--brand);color:var(--brand);background:var(--brand-soft)}
+
+/* An answered gap, in a generated report. The red block says nothing is here;
+   this says something was supplied, by whom, and when. */
+.doc .d-ans{background:#eaf4ee;border-left:3px solid var(--ok);padding:10px 13px;margin:10px 0;
+  font-size:12px;position:relative}
+.doc .d-ans b{display:block;color:var(--ok);margin-bottom:3px}
+.doc .d-ans .d-by{display:block;margin-top:7px;font-size:10.5px;color:#3c5162;font-style:italic}
+.doc .d-ans .d-gid{position:absolute;top:9px;right:11px;
+  font:700 9px 'JetBrains Mono',monospace;color:var(--ok);letter-spacing:.06em}
+
+@media (max-width:620px){
+  .ef-grid{grid-template-columns:minmax(0,1fr)}
+  .ef.half{grid-column:1 / -1}
+  .ef-scale{grid-template-columns:repeat(2,1fr)}
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -1429,8 +1503,12 @@ function calcCompleteness(templateId){
   const t = appData.reportTemplates[templateId];
   if (!t) return {pct:0, done:0, blocked:0, total:0, blockedBy:[]};
   const real = t.sections.filter(s => s.block);
-  const blocked = real.filter(s => (s.gaps || []).length);
-  const ids = [...new Set(blocked.flatMap(s => s.gaps))];
+  /* A gap someone has answered no longer blocks the section that was holding
+     its question. That is the whole point of being able to answer one. */
+  const unanswered = s => (s.gaps || [])
+    .filter(id => { const g = appData.gaps.find(x => x.id === id); return g && !g.answer; });
+  const blocked = real.filter(s => unanswered(s).length);
+  const ids = [...new Set(blocked.flatMap(unanswered))];
   return {pct: pct(real.length - blocked.length, real.length),
           done: real.length - blocked.length,
           blocked: blocked.length, total: real.length, blockedBy: ids,
@@ -1660,14 +1738,24 @@ function folPriorities(scores){
 
 /* Movement between the two self-study rounds, school by school. */
 function calcFolMovement(){
+  /* Movement needs both rounds. A school with one round, or none, has no
+     movement to report — it is left out rather than counted as no change,
+     which would be a claim nobody made. */
   return appData.schools.map(s => {
     const a = folFor(s.code,'R1'), b = folFor(s.code,'R2');
-    return {school:s, from:a.stage, to:b.stage, meanFrom:a.mean, meanTo:b.mean,
+    if (!a || !b) return {school:s, assessed:false, from:a ? a.stage : null,
+      to:b ? b.stage : null, meanFrom:a ? a.mean : null, meanTo:b ? b.mean : null,
+      gain:null, crossed:false, changed:false};
+    return {school:s, assessed:true, from:a.stage, to:b.stage,
+            meanFrom:a.mean, meanTo:b.mean,
             gain:Math.round((b.mean - a.mean) * 100) / 100,
             crossed: a.mean < appData.selfStudy.benchmark && b.mean >= appData.selfStudy.benchmark,
             changed: a.stage !== b.stage};
-  });
+  }).filter(m => m.assessed);
 }
+/* How many schools have no self-study at all, so a screen can say so instead
+   of quietly reporting a denominator that is smaller than the register. */
+const folUnassessed = () => appData.schools.filter(s => !folAssessed(s.code));
 /* Which domains the improvement plans keep landing on. AC3 asks for a
    prioritised plan per school; this is what they add up to. */
 function calcFolPriorities(){
@@ -2006,6 +2094,14 @@ function calcCountry(cc){
 const folFor = (code, round) => appData.selfStudy.records
   .find(r => r.school === code && r.round === (round || 'R2'));
 
+/* A school added to the register has no self-study until somebody runs one.
+   folFor() returns nothing for it, and that is correct — inventing a record of
+   zeros would make an unassessed school look like the worst one in the
+   network. Every consumer therefore has to handle "not assessed", and says
+   those words rather than showing a gap in a table. */
+const folAssessed = code => !!folFor(code, 'R2');
+const NOT_ASSESSED = 'Not assessed';
+
 /* Progress against the resolved target — and against the figures that were
    not chosen, because that comparison is the whole point of the decision. */
 function calcTargetProgress(key, actual){
@@ -2256,8 +2352,24 @@ appData.registers = [
 function calcDataQuality(){
   const cells = [];
   appData.registers.forEach(r => appData.dqMeasures.forEach(m => {
-    cells.push({register:r, measure:m, level:r[m.key].level, note:r[m.key].note,
-                score: DQ_LEVELS[r[m.key].level].score});
+    let level = r[m.key].level, note = r[m.key].note, moved = false;
+    /* Integrity is the one verdict this system can earn rather than assert.
+       The seeded figures have no author and no timestamp; anything recorded
+       through a form does, so the verdict moves for that register once the log
+       has an entry in it — and says what it is based on. */
+    if (m.key === 'integrity'){
+      const n = entriesFor(r.key).length;
+      if (n){
+        moved = true;
+        level = level === 'weak' ? 'partial' : level === 'partial' ? 'strong' : level;
+        note = `${n} change${n === 1 ? '' : 's'} to this register ${
+          n === 1 ? 'has' : 'have'} been recorded through a form, with the name of whoever made `
+          + `${n === 1 ? 'it' : 'them'} and the time. The figures that arrived with the seed `
+          + `still have neither — so this is partly earned, not fixed.`;
+      }
+    }
+    cells.push({register:r, measure:m, level, note, moved,
+                score: DQ_LEVELS[level].score});
   }));
   const byLevel = {};
   Object.keys(DQ_LEVELS).forEach(k => byLevel[k] = cells.filter(c => c.level === k).length);
@@ -2342,10 +2454,18 @@ function calcPlanFindings(){
       id:g.id, kind:'blank', severity:sev,
       location:g.where,
       issue:`${g.what} — ${g.detail}`,
-      fix:g.question,
-      state:'needs-client', route:null,
+      fix: g.answer
+        ? `Answered by ${g.answer.by} on ${g.answer.on}: “${g.answer.text}”`
+        : g.question,
+      /* Answered counts as satisfied, and the score moves. A blank nobody has
+         answered still routes nowhere, because nothing inside this system can
+         close it. */
+      state: g.answer ? 'decided' : 'needs-client',
+      route: g.answer ? null : null,
       blocks:g.blocks,
-      routeLabel:'Only B2THEWORLD can answer this'
+      answered: !!g.answer,
+      routeLabel: g.answer ? 'Answered — open it to change the answer'
+                           : 'Only B2THEWORLD can answer this'
     });
   });
 
@@ -2392,14 +2512,29 @@ function calcPlanScore(){
                            .reduce((t,x) => t + w(x), 0),
                          blank.reduce((t,x) => t + w(x), 0)),
           blanksTotal: blank.length,
+          blanksAnswered: blank.filter(x => x.state === 'decided').length,
           high:outstanding.filter(x => x.severity === 'high').length,
           medium:outstanding.filter(x => x.severity === 'medium').length,
           low:outstanding.filter(x => x.severity === 'low').length,
-          band: score >= 85 ? {label:'Sound', tone:'ok'}
-              : score >= 60 ? {label:'Usable, with known holes', tone:'warn'}
-              : score >= 35 ? {label:'Half-settled — the differences are decided, the blanks are not',
-                               tone:'warn'}
-              :               {label:'Not yet a plan you can report against', tone:'bad'}};
+          /* The middle band names the shape of the problem rather than a
+             grade — and the shape changes as blanks get answered, so the label
+             is computed from the two halves instead of asserted once. */
+          band: (() => {
+            const cp = pct(conf.filter(x => x.state === 'decided').reduce((t,x) => t + w(x), 0),
+                           conf.reduce((t,x) => t + w(x), 0));
+            const bp = pct(blank.filter(x => x.state === 'decided').reduce((t,x) => t + w(x), 0),
+                           blank.reduce((t,x) => t + w(x), 0));
+            if (score >= 85) return {label:'Sound', tone:'ok'};
+            if (score >= 60) return {label:'Usable, with known holes', tone:'warn'};
+            if (score >= 35) return {
+              label: cp >= 80 && bp < 40
+                ? 'Half-settled \u2014 the differences are decided, the blanks mostly are not'
+                : bp >= 80 && cp < 40
+                ? 'Half-settled \u2014 the blanks are being filled, the differences are not decided'
+                : 'Half-settled \u2014 work has started on both halves',
+              tone:'warn'};
+            return {label:'Not yet a plan you can report against', tone:'bad'};
+          })()};
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -2487,11 +2622,845 @@ function closeModal(){
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   4c. DATA ENTRY — the form kit, and the log that makes it auditable
+   Every figure in this system can be recorded by a person as well as seeded.
+   Two rules hold throughout:
+     1. A form writes to appData and nothing else. The screens re-derive from
+        it, so a recorded figure reaches every table, chart and report that
+        uses it in the same instant.
+     2. Every write is logged with a name and a timestamp. This is the one
+        thing the Data Quality Plan says is missing from the seeded data, and
+        the integrity verdicts on that screen move as the log fills up.
+   ═══════════════════════════════════════════════════════════════════════════ */
+appData.entryLog = [];
+
+/* Registers a form writes to that the Data Quality Plan does not assess —
+   because A §7.1's five measures are about the figures an indicator is built
+   from, and these two are not. Declared rather than assumed, so a typo in a
+   register key is caught by a consistency check instead of silently making a
+   write inert. */
+const ENTRY_UNASSESSED_REGISTERS = ['countries', 'gaps'];
+
+function logEntry(register, what, detail){
+  appData.entryLog.unshift({
+    at: new Date().toISOString(),
+    stamp: nowStamp(),
+    time: new Date().toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'}),
+    by: currentUser.name, role: currentUser.title,
+    register, what, detail
+  });
+  /* The log is the audit trail, not a cache. It is never trimmed, because a
+     trimmed audit trail is worse than none — it looks complete and is not. */
+  return appData.entryLog[0];
+}
+const entriesFor = register => appData.entryLog.filter(e => e.register === register);
+
+/* ── Fields ──────────────────────────────────────────────────────────────── */
+const FIELD_CSS = `width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:9px;
+  background:var(--bg-card);color:var(--ink);font:400 12.5px 'Inter',sans-serif`;
+
+function fieldHTML(f, v){
+  const id = 'f-' + f.name;
+  const val = v === undefined || v === null ? '' : v;
+  const common = `id="${id}" name="${esc(f.name)}"`;
+  let input;
+
+  switch (f.type){
+    case 'number':
+      input = `<input type="number" ${common} value="${esc(String(val))}"
+        ${f.min !== undefined ? `min="${f.min}"` : ''}
+        ${f.max !== undefined ? `max="${f.max}"` : ''}
+        step="${f.step || 1}" style="${FIELD_CSS}"
+        ${f.placeholder ? `placeholder="${esc(f.placeholder)}"` : ''}>`;
+      break;
+    case 'select':
+      input = `<select ${common} style="${FIELD_CSS};cursor:pointer">
+        ${f.blank ? `<option value="">${esc(f.blank)}</option>` : ''}
+        ${f.options.map(o => {
+          const ov = Array.isArray(o) ? o[0] : o, ol = Array.isArray(o) ? o[1] : o;
+          return `<option value="${esc(String(ov))}"${
+            String(ov) === String(val) ? ' selected' : ''}>${esc(String(ol))}</option>`;
+        }).join('')}</select>`;
+      break;
+    case 'textarea':
+      input = `<textarea ${common} rows="${f.rows || 3}" style="${FIELD_CSS};resize:vertical"
+        ${f.placeholder ? `placeholder="${esc(f.placeholder)}"` : ''}>${esc(String(val))}</textarea>`;
+      break;
+    case 'date':
+      input = `<input type="date" ${common} value="${esc(String(val))}" style="${FIELD_CSS}">`;
+      break;
+    case 'score':
+      /* 1–4, the scale POOA v5 and the observation instrument both use. A
+         score is a judgement, so it is chosen from the scale rather than
+         typed — you cannot enter 3.7 on a four-point rubric. */
+      input = `<div class="ef-scale" data-for="${esc(f.name)}">
+        ${[1,2,3,4].map(n => `<label class="${String(n) === String(val) ? 'on' : ''}">
+          <input type="radio" name="${esc(f.name)}" value="${n}"
+            ${String(n) === String(val) ? 'checked' : ''}><b>${n}</b>
+          <span>${esc((f.scale || ['Entry','Developing','Intermediate','Advanced'])[n-1])}</span>
+        </label>`).join('')}</div>`;
+      break;
+    case 'yesno':
+      input = `<div class="ef-yn" data-for="${esc(f.name)}">
+        ${[['1', f.yes || 'Yes'], ['0', f.no || 'No']].map(([ov, ol]) => `
+          <label class="${String(ov) === String(val) ? 'on' : ''}">
+            <input type="radio" name="${esc(f.name)}" value="${ov}"
+              ${String(ov) === String(val) ? 'checked' : ''}>${esc(ol)}</label>`).join('')}</div>`;
+      break;
+    case 'static':
+      input = `<div class="ef-static">${f.value}</div>`;
+      break;
+    default:
+      input = `<input type="text" ${common} value="${esc(String(val))}" style="${FIELD_CSS}"
+        ${f.placeholder ? `placeholder="${esc(f.placeholder)}"` : ''}
+        ${f.maxlength ? `maxlength="${f.maxlength}"` : ''}>`;
+  }
+
+  return `<div class="ef${f.half ? ' half' : ''}" data-field="${esc(f.name)}">
+    <label for="${id}">${esc(f.label)}${f.required ? '<i>required</i>' : ''}</label>
+    ${input}
+    ${f.hint ? `<div class="ef-hint">${f.hint}</div>` : ''}
+    <div class="ef-err" data-err="${esc(f.name)}"></div>
+  </div>`;
+}
+
+/* Read the form back. Validation is here rather than in each handler, so a
+   handler only ever sees values that are the right shape. */
+function formRead(fields){
+  const values = {}, errors = {};
+  fields.forEach(f => {
+    if (f.type === 'static' || f.type === 'heading') return;
+    let raw;
+    if (f.type === 'score' || f.type === 'yesno'){
+      const sel = document.querySelector(`input[name="${f.name}"]:checked`);
+      raw = sel ? sel.value : '';
+    } else {
+      const el = document.getElementById('f-' + f.name);
+      raw = el ? el.value : '';
+    }
+    raw = String(raw === undefined || raw === null ? '' : raw).trim();
+
+    if (f.required && raw === ''){
+      errors[f.name] = f.requiredMsg || 'This is needed.';
+      return;
+    }
+    if (raw === ''){ values[f.name] = f.type === 'number' ? null : ''; return; }
+
+    if (f.type === 'number' || f.type === 'score' || f.type === 'yesno'){
+      const n = Number(raw);
+      if (!isFinite(n)){ errors[f.name] = 'A number, please.'; return; }
+      /* A score is bounded by the scale it is drawn on, and a yes/no by being
+         one or the other, whatever the widget sends. The validator does not
+         trust its own input: the only four-point score this will accept is a
+         four-point score. */
+      const min = f.min !== undefined ? f.min : f.type === 'score' ? 1 : f.type === 'yesno' ? 0 : undefined;
+      const max = f.max !== undefined ? f.max : f.type === 'score' ? 4 : f.type === 'yesno' ? 1 : undefined;
+      if (min !== undefined && n < min){
+        errors[f.name] = `Not below ${min}.`; return; }
+      if (max !== undefined && n > max){
+        errors[f.name] = `Not above ${num(max)}.`; return; }
+      if ((f.type === 'score' || f.type === 'yesno') && !Number.isInteger(n)){
+        errors[f.name] = 'Choose one of the options.'; return; }
+      if (f.integer && !Number.isInteger(n)){
+        errors[f.name] = 'A whole number.'; return; }
+      values[f.name] = n;
+    } else {
+      values[f.name] = raw;
+    }
+  });
+  return {values, errors};
+}
+
+function formShowErrors(errors){
+  document.querySelectorAll('[data-err]').forEach(el => { el.textContent = ''; });
+  document.querySelectorAll('[data-field]').forEach(el => el.classList.remove('bad'));
+  Object.keys(errors).forEach(k => {
+    const e = document.querySelector(`[data-err="${k}"]`);
+    if (e) e.textContent = errors[k];
+    const w = document.querySelector(`[data-field="${k}"]`);
+    if (w) w.classList.add('bad');
+  });
+}
+
+/* ── The one form opener every entry point uses ─────────────────────────── */
+let entryOpen = null;
+
+function openEntryForm(key, meta){
+  const spec = ENTRY_FORMS[key];
+  if (!spec) return;
+  const built = spec.build(meta);
+  if (built.refuse){
+    openModal({title:built.title || 'Not possible', body:`<div class="banner warn">
+      <i class="bi bi-exclamation-triangle-fill"></i><div>${built.refuse}</div></div>`,
+      foot:`<button class="btn" data-action="close-modal">Close</button>`});
+    return;
+  }
+  entryOpen = {key, meta, fields:built.fields};
+  openModal({
+    wide: built.wide !== false,
+    title: built.title,
+    body: `${built.intro ? `<p class="ef-intro">${built.intro}</p>` : ''}
+      <form id="entry-form" class="ef-grid" onsubmit="return false">
+        ${built.fields.map(f => f.type === 'heading'
+          ? `<div class="ef-head">${esc(f.label)}${
+              f.hint ? `<span>${esc(f.hint)}</span>` : ''}</div>`
+          : fieldHTML(f, built.values ? built.values[f.name] : undefined)).join('')}
+      </form>
+      ${built.after || ''}`,
+    foot: `<div class="ef-foot-note">
+        <i class="bi bi-person-check"></i> Recorded against
+        <strong>${esc(currentUser.name)}</strong> on ${esc(nowStamp())}${
+        built.footNote ? ' · ' + built.footNote : ''}</div>
+      <button class="btn" data-action="close-modal">Cancel</button>
+      <button class="btn btn-primary" data-action="entry-submit">
+        <i class="bi bi-check2"></i> ${esc(built.submit || 'Save')}</button>`
+  });
+}
+
+function entrySubmit(){
+  if (!entryOpen) return;
+  const spec = ENTRY_FORMS[entryOpen.key];
+  const {values, errors} = formRead(entryOpen.fields);
+  if (Object.keys(errors).length){
+    formShowErrors(errors);
+    toast('Some of that needs fixing before it can be saved.', 'warn');
+    return;
+  }
+  let out;
+  try { out = spec.save(values, entryOpen.meta); }
+  catch (e){ toast('That could not be saved: ' + esc(e.message), 'bad'); return; }
+
+  if (out && out.errors && Object.keys(out.errors).length){
+    formShowErrors(out.errors);
+    toast(out.message || 'Some of that needs fixing.', 'warn');
+    return;
+  }
+  const key = entryOpen.key, meta = entryOpen.meta;
+  entryOpen = null;
+  closeModal();
+  /* Re-render whatever the user is looking at, so the figure they just typed
+     appears everywhere it belongs without a reload. */
+  appData.checkSnapshot = runConsistencyChecks();
+  showView((out && out.view) || currentView, (out && out.meta !== undefined)
+    ? out.meta : currentMeta);
+  toast((out && out.message) || 'Saved.', (out && out.tone) || 'ok');
+}
+
+/* The button that appears on every register that can be written to. */
+function entryBtn(key, meta, label, opts){
+  opts = opts || {};
+  if (access(currentView) === 'read')
+    return `<span class="chip warn"><i class="bi bi-lock"></i>read-only for your role</span>`;
+  return `<button class="btn btn-sm ${opts.primary ? 'btn-primary' : ''}"
+    data-action="entry-open" data-form="${esc(key)}"
+    ${meta !== undefined && meta !== null ? `data-meta="${esc(String(meta))}"` : ''}
+    ${opts.title ? `title="${esc(opts.title)}"` : ''}>
+    <i class="bi ${opts.icon || 'bi-plus-lg'}"></i> ${esc(label)}</button>`;
+}
+/* A small pencil, for editing a row in place. */
+function editBtn(key, meta, title){
+  if (access(currentView) === 'read') return '';
+  return `<button class="ef-pencil" data-action="entry-open" data-form="${esc(key)}"
+    data-meta="${esc(String(meta))}" title="${esc(title || 'Edit')}">
+    <i class="bi bi-pencil"></i></button>`;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   4d. THE FORMS
+   One entry per register. `build` returns the fields and any current values;
+   `save` writes to appData, logs the write, and says what moved. Neither ever
+   fills a blank in a source document or resolves a documented difference —
+   those have their own screen, where a person does it and is named for it.
+   ═══════════════════════════════════════════════════════════════════════════ */
+const COUNTRY_OPTS = () => appData.countries.map(c => [c.code, c.name]);
+
+const ENTRY_FORMS = {
+
+/* ── A partner school ──────────────────────────────────────────────────── */
+'school': {
+  build(code){
+    const s = code ? appData.schools.find(x => x.code === code) : null;
+    return {
+      title: s ? `${s.name || s.code} — edit` : 'Add a partner school',
+      submit: s ? 'Save the school' : 'Add the school',
+      intro: s
+        ? `Changing enrolment here moves the student total, the attendance average, every
+           country figure and every report that uses them — immediately, because they all read
+           this register rather than holding their own copy.`
+        : `A new school joins the register with no self-study and no observed teachers. Both are
+           recorded separately, so the school appears as unassessed rather than as zero.`,
+      values: s ? Object.assign({}, s, {
+        cc: s.cc, name: s.name || '', teachers: s.teachers
+      }) : {joined: String(new Date(appData.config.today).getFullYear())},
+      fields: [
+        {type:'heading', label:'The school'},
+        {name:'cc', label:'Country', type:'select', options:COUNTRY_OPTS(),
+         required:true, half:true},
+        {name:'level', label:'Level', type:'select', options:['Primary','Secondary'],
+         required:true, half:true},
+        {name:'name', label:'Name', type:'text', half:true,
+         placeholder:'Leave empty if it has none on record',
+         hint:'Six schools are named in the source documents. Leaving this empty carries the '
+            + 'school by its register code, which is better than inventing a name.'},
+        {name:'joined', label:'Partnership since', type:'number', min:2010, max:2030,
+         integer:true, half:true},
+        {type:'heading', label:'Enrolment', hint:'Counts only — no child is recorded individually'},
+        {name:'enrolledM', label:'Boys enrolled', type:'number', min:0, max:5000,
+         integer:true, required:true, half:true},
+        {name:'enrolledF', label:'Girls enrolled', type:'number', min:0, max:5000,
+         integer:true, required:true, half:true},
+        {name:'capacity', label:'Places', type:'number', min:0, max:10000, integer:true,
+         required:true, half:true,
+         hint:'The system flags a school enrolled above its capacity rather than hiding it.'},
+        {name:'teachers', label:'Teachers', type:'number', min:1, max:400, integer:true,
+         required:true, half:true},
+        {type:'heading', label:'Rates', hint:'Per cent, as the school reports them'},
+        {name:'attendance', label:'Attendance', type:'number', min:0, max:100, step:0.1,
+         required:true, half:true,
+         hint:`The goal is ${appData.targets.attendance.value}% daily attendance (B §6.1).`},
+        {name:'retention', label:'Retention', type:'number', min:0, max:100, step:0.1,
+         required:true, half:true},
+        {name:'transition', label:'Transition to secondary', type:'number', min:0, max:100,
+         step:0.1, half:true, hint:'Primary schools only — leave empty for a secondary school.'},
+        {name:'graduation', label:'Graduation', type:'number', min:0, max:100, step:0.1,
+         half:true, hint:'Secondary schools only.'}
+      ]
+    };
+  },
+  save(v, code){
+    const errors = {};
+    if (v.enrolledM + v.enrolledF === 0) errors.enrolledM = 'A school with no children on the '
+      + 'register is not a partner school yet.';
+    if (v.capacity && v.enrolledM + v.enrolledF > v.capacity * 3)
+      errors.capacity = 'Three times capacity looks like a typo. Check the figure.';
+    if (v.level === 'Primary' && v.graduation !== null)
+      errors.graduation = 'A primary school has no graduation figure. Use transition.';
+    if (v.level === 'Secondary' && v.transition !== null)
+      errors.transition = 'A secondary school has no transition figure. Use graduation.';
+    if (Object.keys(errors).length) return {errors};
+
+    const c = appData.countries.find(x => x.code === v.cc);
+    const total = v.enrolledM + v.enrolledF;
+    const row = {
+      country:c.name, cc:c.code, level:v.level,
+      name: v.name || null, joined:String(v.joined || c.joined),
+      enrolledM:v.enrolledM, enrolledF:v.enrolledF, capacity:v.capacity,
+      teachers:v.teachers, leaders:2,
+      attendance:v.attendance, retention:v.retention,
+      transition: v.level === 'Primary' ? v.transition : null,
+      graduation: v.level === 'Secondary' ? v.graduation : null,
+      university: v.level === 'Secondary' ? 0 : null
+    };
+
+    if (code){
+      const s = appData.schools.find(x => x.code === code);
+      const was = s.enrolledM + s.enrolledF;
+      Object.assign(s, row);
+      logEntry('enrolment', `${s.name || s.code} updated`,
+        `Enrolment ${num(was)} → ${num(total)}, attendance ${v.attendance}%`);
+      return {message:`${esc(s.name || s.code)} saved. Enrolment ${num(was)} → `
+        + `<strong>${num(total)}</strong>; the network now holds `
+        + `<strong>${num(calcStudents().total)}</strong> children.`};
+    }
+
+    /* A new code, in the same shape the seed uses, numbered after the highest
+       already there so it cannot collide with one the seed produced. */
+    const lv = v.level === 'Primary' ? 'P' : 'S';
+    const nextNum = appData.schools
+      .filter(x => x.cc === c.code && x.level === v.level)
+      .reduce((m, x) => Math.max(m, parseInt(x.code.slice(-2), 10) || 0), 0) + 1;
+    row.code = `${c.code}-${lv}-${String(nextNum).padStart(2,'0')}`;
+    appData.schools.push(row);
+    c.schools = appData.schools.filter(x => x.cc === c.code).length;
+    if (v.level === 'Primary') c.pri = (c.pri || 0) + 1; else c.sec = (c.sec || 0) + 1;
+
+    logEntry('enrolment', `${row.name || row.code} added`,
+      `${c.name} · ${v.level} · ${num(total)} children, ${v.teachers} teachers`);
+    const p = calcTargetProgress('schools', calcSchools().total);
+    return {view:'school-detail', meta:row.code,
+      message:`${esc(row.name || row.code)} added. ${num(calcSchools().total)} partner schools `
+        + `now — <strong>${p.pct}%</strong> of the target of `
+        + `${num(appData.targets.schools.value)}. It has no self-study yet, so it shows as `
+        + `unassessed rather than as zero.`};
+  }
+},
+
+/* ── A self-study round ────────────────────────────────────────────────── */
+'selfstudy': {
+  build(metaStr){
+    const parts = String(metaStr || '').split(':');
+    const code = parts[0], round = parts[1] || 'R2';
+    const s = appData.schools.find(x => x.code === code);
+    if (!s) return {refuse:'That school is not in the register.'};
+    const rec = folFor(code, round);
+    const rd = appData.selfStudy.rounds.find(r => r.id === round);
+    return {
+      title: `${s.name || s.code} — ${rd.label}`,
+      submit: rec ? 'Save the scores' : 'Record the round',
+      intro: `The school scores itself against each of the
+        ${appData.selfStudy.domains.length} Fullness of Life domains, 1 to 4. The mean places it
+        at a stage, and the two lowest domains become its improvement priorities — so the
+        priorities are the school's own assessment of itself, not a ranking imposed on it.`,
+      values: rec ? Object.assign({round}, rec.scores) : {round},
+      fields: [
+        {name:'round', label:'Round', type:'select',
+         options:appData.selfStudy.rounds.map(r => [r.id, r.label]), required:true},
+        {type:'heading', label:'Domain scores',
+         hint:`${appData.selfStudy.benchmark} or above meets the `
+            + `${appData.selfStudy.benchmarkLabel} benchmark`},
+        ...appData.selfStudy.domains.map(d => ({
+          name:d.key, label:d.label, type:'score', required:true
+        }))
+      ],
+      after: rec ? `<div class="banner warn" style="margin:14px 0 0">
+        <i class="bi bi-clock-history"></i>
+        <div>This round already has scores. Saving replaces them — the other round is untouched,
+          so the movement between the two stays computable.</div></div>` : ''
+    };
+  },
+  save(v, metaStr){
+    const code = String(metaStr || '').split(':')[0];
+    const s = appData.schools.find(x => x.code === code);
+    const scores = {};
+    appData.selfStudy.domains.forEach(d => { scores[d.key] = v[d.key]; });
+    const mean = Math.round(appData.selfStudy.domains
+      .reduce((t,d) => t + scores[d.key], 0) / appData.selfStudy.domains.length * 100) / 100;
+    const stage = folStage(mean);
+
+    let rec = appData.selfStudy.records.find(r => r.school === code && r.round === v.round);
+    const was = rec ? {mean:rec.mean, stage:rec.stage} : null;
+    if (!rec){
+      rec = {school:code, round:v.round};
+      appData.selfStudy.records.push(rec);
+    }
+    Object.assign(rec, {scores, mean, stage, priorities:folPriorities(scores)});
+
+    logEntry('selfstudy', `${s.name || s.code} · ${v.round}`,
+      was ? `Mean ${was.mean} → ${mean}, ${was.stage} → ${stage}`
+          : `Mean ${mean}, ${stage}`);
+
+    const f = calcFoL('R2');
+    const crossed = mean >= appData.selfStudy.benchmark;
+    return {view:'school-detail', meta:code,
+      message:`${esc(s.name || s.code)} scores <strong>${mean}</strong> — ${esc(stage)}`
+        + (crossed ? `, at or above the ${esc(appData.selfStudy.benchmarkLabel)} benchmark`
+                   : `, below the benchmark of ${appData.selfStudy.benchmark}`)
+        + `. Across the network ${f.benchmarkPct}% of schools now meet it. Priorities: `
+        + rec.priorities.map(p => esc(p.label.toLowerCase())).join(' and ') + '.'};
+  }
+},
+
+/* ── A classroom observation ───────────────────────────────────────────── */
+'observation': {
+  build(metaStr){
+    const parts = String(metaStr || '').split(':');
+    const tcode = parts[0], round = parts[1] || 'after';
+    const t = appData.teachers.find(x => x.code === tcode);
+    if (!t) return {refuse:'That teacher is not in the register.'};
+    const s = appData.schools.find(x => x.code === t.school);
+    const cur = round === 'before' ? t.obsBefore : t.obsAfter;
+    return {
+      title: `Observation — ${esc(tcode)}`,
+      submit: 'Record the observation',
+      intro: `Five domains, 1 to 4, from the Why/Play/Lead instrument. This is the softest data
+        the system holds: a judgement made by someone who was in the room. Recording who made it
+        is the point of the two fields at the top — the seeded observations do not have them, and
+        the Data Quality Plan marks them down for it.`,
+      values: Object.assign({round, observer:currentUser.name,
+        date: appData.config.today, trained: t.trained ? 1 : 0}, cur || {}),
+      fields: [
+        {type:'static', label:'Teacher', value:`<span class="mono">${esc(tcode)}</span> ·
+          ${esc(s ? (s.name || s.code) : '')} · ${esc(s ? s.country : '')}`},
+        {name:'round', label:'Round', type:'select',
+         options:[['before','Round 1 — before training'],['after','Round 2 — after training']],
+         required:true, half:true},
+        {name:'trained', label:'Trained in Why/Play/Lead', type:'yesno', required:true,
+         half:true},
+        {name:'observer', label:'Observed by', type:'text', required:true, half:true,
+         hint:'Recorded so a score can be traced to the person who gave it.'},
+        {name:'date', label:'Date observed', type:'date', required:true, half:true},
+        {type:'heading', label:'Practice observed',
+         hint:'3 or above is taken as consistently applying the framework'},
+        ...OBS_DOMAINS.map(d => ({
+          name:d.key, label:d.label, type:'score', required:true,
+          scale:['Not seen','Emerging','Consistent','Embedded']
+        }))
+      ]
+    };
+  },
+  save(v, metaStr){
+    const tcode = String(metaStr || '').split(':')[0];
+    const t = appData.teachers.find(x => x.code === tcode);
+    const scores = {};
+    OBS_DOMAINS.forEach(d => { scores[d.key] = v[d.key]; });
+    const mean = obsMean(scores);
+
+    if (v.round === 'before'){ t.obsBefore = scores; t.meanBefore = mean; }
+    else { t.obsAfter = scores; t.meanAfter = mean; }
+    t.trained = v.trained === 1;
+    t.observers = t.observers || {};
+    t.observers[v.round] = {by:v.observer, on:v.date};
+
+    const o = calcObservation();
+    logEntry('observation', `${tcode} · ${v.round === 'before' ? 'round 1' : 'round 2'}`,
+      `Mean ${mean}, observed by ${v.observer} on ${v.date}`);
+    return {message:`Recorded. ${esc(tcode)} scores <strong>${mean}</strong> on this round. `
+      + `Across the register practice now reads ${o.before} → ${o.after}, a `
+      + `<strong>${o.increase}%</strong> increase — the figure OC1 asks for.`};
+  }
+},
+
+/* ── A school leader against OC2 ───────────────────────────────────────── */
+'leader': {
+  build(code){
+    const l = appData.leaders.find(x => x.code === code);
+    if (!l) return {refuse:'That leader is not in the register.'};
+    const s = appData.schools.find(x => x.code === l.school);
+    const vals = {trained: l.trained ? 1 : 0, sex: l.sex};
+    LEAD_INDICATORS.forEach(i => { vals[i.key] = l.applied[i.key] ? 1 : 0; });
+    return {
+      title: `${esc(l.role)} — ${esc(s ? (s.name || s.code) : code)}`,
+      submit: 'Save the assessment',
+      intro: `POOA v5's four transformational-leadership indicators. "Consistently implement" is
+        read as all four rather than some of them — a choice this system made because the source
+        does not define it, and one it states on the screen.`,
+      values: vals,
+      fields: [
+        {type:'static', label:'Leader',
+         value:`<span class="mono">${esc(code)}</span> · ${esc(l.role)} · ${esc(l.country)}`},
+        {name:'sex', label:'Sex', type:'select', options:[['M','Male'],['F','Female']],
+         required:true, half:true},
+        {name:'trained', label:'Has had the training', type:'yesno', required:true, half:true},
+        {type:'heading', label:'The four indicators',
+         hint:'All four is "consistently implements"'},
+        ...LEAD_INDICATORS.map(i => ({
+          name:i.key, label:i.label, type:'yesno', required:true,
+          yes:'Applying', no:'Not yet'
+        }))
+      ]
+    };
+  },
+  save(v, code){
+    const l = appData.leaders.find(x => x.code === code);
+    const applied = {};
+    LEAD_INDICATORS.forEach(i => { applied[i.key] = v[i.key] === 1; });
+    const count = LEAD_INDICATORS.filter(i => applied[i.key]).length;
+    const wasConsistent = l.consistent;
+    Object.assign(l, {sex:v.sex, trained:v.trained === 1, applied,
+      appliedCount:count, consistent: count === LEAD_INDICATORS.length,
+      assessedBy:currentUser.name, assessedOn:appData.config.today});
+
+    const L = calcLeaders();
+    logEntry('leaders', `${code} assessed`,
+      `${count} of ${LEAD_INDICATORS.length} indicators applying`);
+    return {message:`Saved. ${count} of ${LEAD_INDICATORS.length} indicators applying`
+      + (l.consistent && !wasConsistent ? ' — this leader now counts as consistent' : '')
+      + (!l.consistent && wasConsistent ? ' — this leader no longer counts as consistent' : '')
+      + `. OC2 reads <strong>${L.consistentPct}%</strong> across ${num(L.total)} leaders.`};
+  }
+},
+
+/* ── A stakeholder in training ─────────────────────────────────────────── */
+'stakeholder': {
+  build(code){
+    const st = code ? appData.stakeholders.find(x => x.code === code) : null;
+    return {
+      title: st ? `${esc(code)} — edit` : 'Enrol a stakeholder',
+      submit: st ? 'Save' : 'Enrol',
+      intro: st
+        ? `"In ongoing training" counts status Ongoing or Completed. The objective says ongoing,
+           so counting those who have finished is a stretch — one the Stakeholder Training screen
+           states rather than hides.`
+        : `Project 2's register: teachers, school leaders and steering committee members in
+           ongoing training. A country can train without having a partner school, which is what
+           the source documents describe for Iraq.`,
+      values: st ? Object.assign({}, st) : {status:'Enrolled', sessions:1,
+        cohort:appData.stakeholders.length ? appData.stakeholders[0].cohort : 'Cohort 1'},
+      fields: [
+        {name:'cc', label:'Country', type:'select', options:COUNTRY_OPTS(), required:true,
+         half:true},
+        {name:'type', label:'Kind of stakeholder', type:'select',
+         options:['Teacher','School leader','Steering committee member'], required:true,
+         half:true},
+        {name:'sex', label:'Sex', type:'select', options:[['M','Male'],['F','Female']],
+         required:true, half:true},
+        {name:'cohort', label:'Cohort', type:'text', required:true, half:true},
+        {type:'heading', label:'Progress'},
+        {name:'status', label:'Status', type:'select',
+         options:['Enrolled','Ongoing','Completed'], required:true, half:true,
+         hint:'Enrolled does not count towards the target until training starts.'},
+        {name:'sessions', label:'Sessions attended', type:'number', min:0, max:40,
+         integer:true, required:true, half:true},
+        {name:'certificate', label:'Certificated', type:'yesno', required:true, half:true,
+         hint:'A certificate is a document outside this system, so it can be checked.'},
+        {name:'mentored', label:'Receiving post-training mentoring', type:'yesno',
+         required:true, half:true}
+      ]
+    };
+  },
+  save(v, code){
+    const errors = {};
+    if (v.certificate === 1 && v.status !== 'Completed')
+      errors.certificate = 'A certificate without a completed course is the kind of thing an '
+        + 'audit asks about. Set the status to Completed first.';
+    if (v.status !== 'Enrolled' && v.sessions === 0)
+      errors.sessions = 'In training with no session attended — check which is right.';
+    if (Object.keys(errors).length) return {errors};
+
+    const c = appData.countries.find(x => x.code === v.cc);
+    const row = {country:c.name, cc:c.code, type:v.type, sex:v.sex, status:v.status,
+      cohort:v.cohort, sessions:v.sessions,
+      certificate:v.certificate === 1, mentored:v.mentored === 1};
+
+    if (code){
+      const st = appData.stakeholders.find(x => x.code === code);
+      Object.assign(st, row);
+      logEntry('training', `${code} updated`, `${v.status}, ${v.sessions} sessions`);
+    } else {
+      const n = appData.stakeholders.reduce((m,x) =>
+        Math.max(m, parseInt(x.code.slice(3), 10) || 0), 0) + 1;
+      row.code = 'ST-' + String(n).padStart(4,'0');
+      appData.stakeholders.push(row);
+      logEntry('training', `${row.code} enrolled`, `${c.name} · ${v.type} · ${v.status}`);
+    }
+    const T = calcTraining();
+    const p = calcTargetProgress('stakeholders', T.inTraining);
+    return {message:`Saved. <strong>${num(T.inTraining)}</strong> stakeholders in training of `
+      + `${num(T.total)} enrolled — ${p.pct}% of the target of `
+      + `${num(appData.targets.stakeholders.value)}.`};
+  }
+},
+
+/* ── An employee's practices — Project 3 ───────────────────────────────── */
+'culture': {
+  build(code){
+    const e = appData.culture.staff.find(x => x.code === code);
+    if (!e) return {refuse:'That employee is not on the register.'};
+    const vals = {};
+    ['trainedCulture','readLeadWithPrayer','ecoAppDaily','ruleOfLife','prayerMap']
+      .forEach(k => { vals[k] = e[k] ? 1 : 0; });
+    return {
+      title: `${esc(code)} — Project 3 practices`,
+      submit: 'Save',
+      intro: `What the system can observe: a session attended, a book delivered, an app account
+        posting, a rule of life written down. Whether someone is <em>living out</em> a rule of
+        life is not observable from here, and the Culture screen says so rather than implying
+        these five answers settle it.`,
+      values: vals,
+      fields: [
+        {type:'static', label:'Employee',
+         value:`<span class="mono">${esc(code)}</span> — employees are held by code; no staff
+           member is named on this register`},
+        {name:'trainedCulture', label:'Trained in team culture and core values', type:'yesno',
+         required:true, yes:'Attended', no:'Not yet'},
+        {name:'ruleOfLife', label:'Personal rule of life written', type:'yesno', required:true,
+         yes:'Written', no:'Not yet'},
+        {name:'readLeadWithPrayer', label:'Completed Lead with Prayer', type:'yesno',
+         required:true, yes:'Completed', no:'Not yet'},
+        {name:'ecoAppDaily', label:'Posting on the ECO App daily', type:'yesno', required:true,
+         yes:'Daily', no:'Not daily'},
+        {name:'prayerMap', label:'Prayer tool prayer map completed', type:'yesno',
+         required:true, yes:'Completed', no:'Not yet'}
+      ]
+    };
+  },
+  save(v, code){
+    const e = appData.culture.staff.find(x => x.code === code);
+    ['trainedCulture','readLeadWithPrayer','ecoAppDaily','ruleOfLife','prayerMap']
+      .forEach(k => { e[k] = v[k] === 1; });
+    const C = calcCulture(), ind = calcIndicator('P3-1');
+    logEntry('culture', `${code} updated`,
+      `${[e.trainedCulture, e.ruleOfLife, e.ecoAppDaily].filter(Boolean).length} of 3 core `
+      + `practices`);
+    return {message:`Saved. <strong>${C.pctAll}%</strong> of ${num(C.staff)} employees are doing `
+      + `all three together, against P3's target of 100% — ${esc(ind.status.label.toLowerCase())}.`};
+  }
+},
+
+/* ── A country ─────────────────────────────────────────────────────────── */
+'country': {
+  build(code){
+    const c = appData.countries.find(x => x.code === code);
+    if (!c) return {refuse:'That country is not in the register.'};
+    return {
+      title: `${esc(c.name)} — edit`,
+      submit: 'Save the country',
+      intro: c.coordinator ? '' : `No coordinator is named for ${esc(c.name)} in any source
+        document, and A §5.2 makes the country coordinator the person who reports most of a
+        country's figures. Naming one here closes that, and is logged against your name.`,
+      values: {status:c.status, coordinator:c.coordinator || '', context:c.context,
+        joined:Number(c.joined)},
+      fields: [
+        {type:'static', label:'Country',
+         value:`${esc(c.name)} · <span class="mono">${esc(c.code)}</span> ·
+           ${num(appData.schools.filter(s => s.cc === c.code).length)} schools`},
+        {name:'status', label:'Partnership status', type:'select',
+         options:[['current','Current partner'],['developing','Developing'],
+                  ['candidate','Candidate']], required:true, half:true},
+        {name:'joined', label:'Partner since', type:'number', min:2010, max:2030, integer:true,
+         half:true},
+        {name:'coordinator', label:'Country coordinator', type:'text', half:true,
+         placeholder:'Leave empty if there genuinely is none',
+         hint:'Leaving it empty keeps the gap visible. It is better than a placeholder name.'},
+        {name:'context', label:'Context', type:'textarea', rows:3, required:true,
+         hint:'What a reader needs to know to read this country’s figures properly.'}
+      ]
+    };
+  },
+  save(v, code){
+    const c = appData.countries.find(x => x.code === code);
+    const had = !!c.coordinator;
+    Object.assign(c, {status:v.status, joined:String(v.joined || c.joined),
+      coordinator: v.coordinator || null, context:v.context});
+    logEntry('countries', `${c.name} updated`,
+      v.coordinator ? `Coordinator: ${v.coordinator}` : 'No coordinator named');
+    const none = appData.countries.filter(x => !x.coordinator).length;
+    return {view:'country-detail', meta:code,
+      message: !had && v.coordinator
+        ? `${esc(v.coordinator)} is now the coordinator for ${esc(c.name)}. `
+          + (none ? `${none} ${none === 1 ? 'country' : 'countries'} still ${
+              none === 1 ? 'has' : 'have'} none named.` : 'Every country now has one.')
+        : `${esc(c.name)} saved.`};
+  }
+},
+
+/* ── Money ─────────────────────────────────────────────────────────────── */
+'finance': {
+  build(){
+    const f = calcFinance();
+    return {
+      title: 'Record money raised',
+      submit: 'Record it',
+      wide:false,
+      intro: `Two figures exist in the source documents, both in A §5.2:
+        ${usd(appData.targets.revenue.value)} total revenue and
+        ${usd(appData.targets.perCountry.value)} per partner country. There is no budget line
+        anywhere, so this records money in — not money planned or spent.`,
+      values: {month: appData.finance.monthly[appData.finance.monthly.length - 1].month},
+      fields: [
+        {name:'cc', label:'Country envelope', type:'select', options:COUNTRY_OPTS(),
+         blank:'General revenue — not a country envelope', half:true,
+         hint:`Only ${f.countriesMet} of ${f.rows.length} envelopes are met.`},
+        {name:'month', label:'Month', type:'select', required:true, half:true,
+         options:appData.finance.monthly.map(m => [m.month,
+           new Date(m.month + '-01').toLocaleDateString('en-GB',
+             {month:'long', year:'numeric'})])},
+        {name:'amount', label:'Amount in USD', type:'number', min:1, max:5000000, integer:true,
+         required:true,
+         hint:'Added to the month and, if a country is chosen, to that envelope.'}
+      ]
+    };
+  },
+  save(v){
+    const m = appData.finance.monthly.find(x => x.month === v.month);
+    if (!m) return {errors:{month:'That month is not in the register.'}};
+    m.amount += v.amount;
+    let run = 0;
+    appData.finance.monthly.forEach(x => { run += x.amount; x.cumulative = run; });
+    appData.finance.revenue.raised = run;
+
+    let where = 'general revenue';
+    if (v.cc){
+      const p = appData.finance.perCountry[v.cc];
+      p.raised += v.amount;
+      appData.finance.countryRaised = Object.values(appData.finance.perCountry)
+        .reduce((t,x) => t + x.raised, 0);
+      where = appData.countries.find(c => c.code === v.cc).name;
+    }
+    const F = calcFinance();
+    logEntry('finance', `${usd(v.amount)} recorded`, `${where} · ${v.month}`);
+    return {view:'funding',
+      message:`${usd(v.amount)} recorded against ${esc(where)}. Total raised `
+        + `<strong>${usd(F.revenue.raised)}</strong> — ${F.revenuePct}% of `
+        + `${usd(F.revenue.target)}, with ${F.countriesMet} of ${F.rows.length} envelopes met.`};
+  }
+},
+
+/* ── A blank in a source document, answered by a person ────────────────── */
+'gap': {
+  build(id){
+    const g = appData.gaps.find(x => x.id === id);
+    if (!g) return {refuse:'That is not a gap on the register.'};
+    return {
+      title: `${esc(g.id)} — ${esc(g.where)}`,
+      submit: g.answer ? 'Replace the answer' : 'Record the answer',
+      intro: `<strong>${esc(g.what)}.</strong> ${esc(g.detail)} This system has never filled this
+        in and never will on its own — but you can, and it will be recorded against your name,
+        with the date, and printed in every report section that has been holding the question.`,
+      values: g.answer ? {answer:g.answer.text, source:g.answer.source} : {},
+      fields: [
+        {type:'static', label:'The question', value:`<em>${esc(g.question)}</em>`},
+        {type:'static', label:'What it holds up',
+         value:g.blocks.map(b => `<span class="chip grey">${esc(b)}</span>`).join(' ')},
+        {name:'answer', label:'The answer', type:'textarea', rows:5, required:true,
+         requiredMsg:'An empty answer leaves the gap exactly where it was.',
+         placeholder:'In B2THEWORLD’s own words. This is printed in the report, as written.',
+         hint:'Write what is true, not what fills the space. A short honest answer beats a long '
+            + 'plausible one, and the report prints whichever you give it.'},
+        {name:'source', label:'Where this comes from', type:'text',
+         placeholder:'A document, a meeting, a decision — whatever a reader could check',
+         hint:'Optional, but it is the difference between an answer and an assertion.'}
+      ],
+      after: g.answer ? `<div class="banner warn" style="margin:14px 0 0">
+        <i class="bi bi-clock-history"></i>
+        <div>Answered by ${esc(g.answer.by)} on ${esc(g.answer.on)}. Saving replaces that, and
+          the replacement is logged too — the old answer is not erased from the log.</div>
+        </div>` : ''
+    };
+  },
+  save(v, id){
+    const g = appData.gaps.find(x => x.id === id);
+    const was = g.answer;
+    g.answer = {text:v.answer, source:v.source || '', by:currentUser.name, on:nowStamp()};
+    logEntry('gaps', `${g.id} answered`,
+      (was ? 'Replaced a previous answer. ' : '') + v.answer.slice(0, 110)
+      + (v.answer.length > 110 ? '…' : ''));
+
+    const P = calcPlanScore();
+    const left = appData.gaps.filter(x => !x.answer).length;
+    return {view:'quality',
+      message:`${esc(g.id)} answered. It no longer blocks `
+        + `${g.blocks.map(b => esc(b)).join(' or ')} — ${
+          g.blocks.length === 1 ? 'that section' : 'those sections'} now `
+        + `${g.blocks.length === 1 ? 'prints' : 'print'} your answer instead of the question. `
+        + `The plan scores <strong>${P.score}</strong> of 100, with ${left} `
+        + `${left === 1 ? 'blank' : 'blanks'} left.`};
+  }
+}
+};
+
+/* ═══════════════════════════════════════════════════════════════════════════
    5. CONSISTENCY CHECKS — stage 2 fills these in. The chip reports pending
    rather than a green pass it has not earned.
    ═══════════════════════════════════════════════════════════════════════════ */
+/* What a check is for, since it is easy to get wrong: it asserts an INVARIANT —
+   something that must hold however the data changes — not the seed. A check
+   that says "27 schools" turns red the moment somebody adds a 28th, which
+   teaches everyone to ignore the chip. Where the seed figure itself is worth
+   stating, it is stated against appData.seedFacts, captured at load, and
+   labelled as a seed figure rather than a rule. */
+function captureSeedFacts(){
+  const st = calcStudents(), sc = calcSchools(), f2 = calcFoL('R2');
+  return {
+    students: st.total, seedSchools: sc.total,
+    schoolsByCountry: appData.countries
+      .map(c => c.code + ':' + appData.schools.filter(x => x.cc === c.code).length)
+      .join(' \u00b7 '),
+    teachersWorse: appData.teachers.filter(t => t.meanAfter < t.meanBefore).length,
+    schoolsWorse: calcFolMovement().filter(m => m.gain < 0).length,
+    atBenchmark: f2.atBenchmark,
+    revenue: calcFinance().revenue.raised,
+    studentsPct: calcTargetProgress('students', st.total).pct,
+    studentsAltPct: pct(st.total, Math.max(...appData.targets.students.over))
+  };
+}
+
 function runConsistencyChecks(){
   const results = [];
+  /* Captured at load, before anybody can type anything. If it is somehow
+     missing, capture it now rather than throwing — a check that cannot run is
+     better than a chip that crashes the page. */
+  const SF = appData.seedFacts || (appData.seedFacts = captureSeedFacts());
   const check = (name, got, want, note) =>
     results.push({name, pass:JSON.stringify(got) === JSON.stringify(want), got, want, note});
 
@@ -2519,15 +3488,29 @@ function runConsistencyChecks(){
 
   /* ── The register adds up to the plan ─────────────────────────────────── */
   const sc = calcSchools(), st = calcStudents();
-  check('27 partner schools — 14 primary, 13 secondary',
-        [sc.total, sc.primary, sc.secondary], [27, 14, 13]);
-  check('School counts match B Output 2 country by country',
-        appData.countries.map(c => `${c.code}:${appData.schools.filter(s => s.cc === c.code).length}`),
-        ['SSD:13','CMR:7','PAK:5','RWA:2','IRQ:0']);
-  check('Iraq is a partner country with no partner school',
-        [appData.countries.find(c => c.code === 'IRQ').status,
-         appData.schools.filter(s => s.cc === 'IRQ').length], ['current', 0]);
-  check('Students = 7,963, summed from the school register', st.total, 7963);
+  check('Every school is primary or secondary, and the two add to the total',
+        [sc.primary + sc.secondary, sc.total,
+         appData.schools.filter(x => !/^(Primary|Secondary)$/.test(x.level)).length],
+        [sc.total, sc.total, 0]);
+  check('Every school sits in a country that is in the register',
+        appData.schools.filter(x => !appData.countries.some(c => c.code === x.cc))
+          .map(x => x.code), []);
+  check('Every school code is unique',
+        appData.schools.length, new Set(appData.schools.map(x => x.code)).size);
+  check('Each country\u2019s school count is the register, not a stored copy',
+        appData.countries.map(c => c.schools),
+        appData.countries.map(c => appData.schools.filter(x => x.cc === c.code).length));
+  check(`Seed figure: B Output 2\u2019s breakdown was ${SF.schoolsByCountry}`,
+        SF.schoolsByCountry, 'SSD:13 · CMR:7 · PAK:5 · RWA:2 · IRQ:0');
+  check('Every country\u2019s status is one the register defines',
+        appData.countries.filter(c => !/^(current|developing|candidate)$/.test(c.status))
+          .map(c => c.code), []);
+  check('Seed figure: Iraq opened as a partner country with no partner school',
+        /IRQ:0/.test(SF.schoolsByCountry), true);
+  check('The student total is summed from the register, never stored',
+        st.total, appData.schools.reduce((t,x) => t + x.enrolledM + x.enrolledF, 0));
+  check(`Seed figure: the register opened with ${num(SF.students)} children`,
+        SF.students, 7963);
   check('Male and female add to the total', st.male + st.female, st.total);
   check('No school is enrolled beyond its capacity',
         appData.schools.filter(s => s.enrolledM + s.enrolledF > s.capacity).map(s => s.code), []);
@@ -2536,11 +3519,27 @@ function runConsistencyChecks(){
 
   /* ── People ───────────────────────────────────────────────────────────── */
   const ob = calcObservation(), ld = calcLeaders(), tr = calcTraining();
-  check('Teacher records match the school register',
-        ob.total, appData.schools.reduce((t,s) => t + s.teachers, 0));
-  check('Two leaders per school', ld.total, appData.schools.length * 2);
-  check('Every teacher observed twice, and nobody got worse',
-        appData.teachers.filter(t => t.meanAfter < t.meanBefore).map(t => t.code), []);
+  check('Every teacher record belongs to a school in the register',
+        appData.teachers.filter(t => !appData.schools.some(x => x.code === t.school))
+          .map(t => t.code), []);
+  /* A school reports a teacher count; the teacher register holds the ones that
+     have actually been observed. They are allowed to differ — a school added
+     today reports nine teachers and has none observed — so this reports the
+     gap rather than asserting it away. */
+  check('The observed register never exceeds the teachers schools report',
+        ob.total <= appData.schools.reduce((t,s) => t + s.teachers, 0), true);
+  check('Every leader record belongs to a school in the register',
+        appData.leaders.filter(l => !appData.schools.some(x => x.code === l.school))
+          .map(l => l.code), []);
+  check('No school holds more than two leader records',
+        appData.schools.filter(x =>
+          appData.leaders.filter(l => l.school === x.code).length > 2).map(x => x.code), []);
+  check('Every observed mean is inside the instrument\u2019s own 1\u20134 scale',
+        appData.teachers.filter(t =>
+          t.meanBefore < 1 || t.meanBefore > 4 || t.meanAfter < 1 || t.meanAfter > 4)
+          .map(t => t.code), []);
+  check(`Seed figure: no teacher went backwards between the two rounds`,
+        SF.teachersWorse, 0);
   check('"Consistently" means all four leadership indicators, not some',
         appData.leaders.filter(l => l.consistent && l.appliedCount !== 4).length, 0);
   check('Stakeholders in training cannot exceed those enrolled',
@@ -2550,33 +3549,47 @@ function runConsistencyChecks(){
 
   /* ── Fullness of Life ─────────────────────────────────────────────────── */
   const f1 = calcFoL('R1'), f2 = calcFoL('R2');
-  check('Two self-study rounds covering every school',
-        [f1.records.length, f2.records.length], [27, 27]);
-  check('No school went backwards between rounds',
-        appData.schools.filter(s => {
-          const a = appData.selfStudy.records.find(x => x.school === s.code && x.round === 'R1');
-          const b = appData.selfStudy.records.find(x => x.school === s.code && x.round === 'R2');
-          return b.mean < a.mean;
-        }).map(s => s.code), []);
-  check('10 of 27 schools at the Intermediate benchmark',
-        [f2.atBenchmark, f2.benchmarkPct], [10, 37]);
-  check('Every stage count adds to the school total',
-        Object.values(f2.byStage).reduce((a,b) => a + b, 0), 27);
+  check('Every self-study record belongs to a school in the register',
+        appData.selfStudy.records
+          .filter(r => !appData.schools.some(x => x.code === r.school))
+          .map(r => r.school + '/' + r.round), []);
+  check('No school holds two records for the same round',
+        appData.selfStudy.records.length,
+        new Set(appData.selfStudy.records.map(r => r.school + '/' + r.round)).size);
+  check('A school with no self-study is reported as unassessed, not as zero',
+        folUnassessed().filter(x => folFor(x.code)).map(x => x.code), []);
+  check('Movement is only reported where both rounds exist',
+        calcFolMovement().filter(m => m.meanFrom === null || m.meanTo === null).length, 0);
+  check(`Seed figure: no school went backwards between the two rounds`,
+        SF.schoolsWorse, 0);
+  check('The benchmark count is the records that meet it, counted',
+        f2.atBenchmark,
+        f2.records.filter(r => r.mean >= appData.selfStudy.benchmark).length);
+  check(`Seed figure: ${SF.atBenchmark} of ${SF.seedSchools} schools met the benchmark`,
+        [SF.atBenchmark, SF.seedSchools], [10, 27]);
+  check('Every stage count adds to the schools that were assessed',
+        Object.values(f2.byStage).reduce((a,b) => a + b, 0), f2.records.length);
 
   /* ── Money ────────────────────────────────────────────────────────────── */
   const fin = calcFinance();
-  check('The monthly run-rate ends at the stated year total',
-        fin.monthly[fin.monthly.length - 1].cumulative, 847300);
+  check('The monthly run-rate ends at the revenue total, whatever it is',
+        fin.monthly[fin.monthly.length - 1].cumulative, fin.revenue.raised);
+  check(`Seed figure: the year opened at ${usd(SF.revenue)} raised`, SF.revenue, 847300);
   check('Country envelopes sum to the country total',
         fin.rows.reduce((t,r) => t + r.raised, 0), appData.finance.countryRaised);
-  check('Revenue is 77% of the $1.1M in A §5.2', fin.revenuePct, 77);
+  check('Revenue against target is derived, not stored',
+        fin.revenuePct, pct(fin.revenue.raised, fin.revenue.target));
 
   /* ── What the decision cost, asserted rather than claimed ─────────────── */
   const tpS = calcTargetProgress('students', st.total);
-  check('Students are short of the resolved target but past both others',
-        [tpS.met, tpS.alternatives.map(a => a.met)], [false, [true, true]]);
-  check('Schools meet the resolved target exactly',
-        [calcTargetProgress('schools', sc.total).met, sc.total], [true, 27]);
+  check('Every target still carries the figures it was chosen over',
+        ['students','schools','stakeholders','countries']
+          .filter(k => !Array.isArray(appData.targets[k].over)), []);
+  check(`Seed figure: ${num(SF.students)} children read as ${SF.studentsPct}% of the `
+        + `resolved target and ${SF.studentsAltPct}% of the next highest`,
+        [SF.studentsPct, SF.studentsAltPct], [79.6, 115.4]);
+  check('Progress against a target is computed from the register and the decision',
+        calcTargetProgress('schools', sc.total).pct, pct(sc.total, appData.targets.schools.value));
 
   /* ── Indicators ───────────────────────────────────────────────────────── */
   const inds = calcAllIndicators();
@@ -2592,6 +3605,13 @@ function runConsistencyChecks(){
         ['P1-O','P1-3','P2-O'].map(c => calcIndicator(c).target),
         [appData.targets.students.value, appData.targets.schools.value,
          appData.targets.stakeholders.value]);
+  /* A form that logs to a register nothing recognises is inert: the audit
+     trail shows the write, and no data-quality verdict ever moves for it.
+     Silent and wrong, so it is checked. */
+  check('Every register a form writes to is one the system knows',
+        [...new Set(appData.entryLog.map(e => e.register))]
+          .filter(k => !appData.registers.some(r => r.key === k)
+                    && !ENTRY_UNASSESSED_REGISTERS.includes(k)), []);
   check('Indicators are drawn from both plans',
         [inds.filter(i => i.indicator.plan === 'y2024').length > 0,
          inds.filter(i => i.indicator.plan === 'pooa5').length > 0], [true, true]);
@@ -3404,7 +4424,12 @@ function renderCountries(){
   const noSchool = cs.filter(x => !x.schools.length);
   const totStudents = cs.reduce((n,x) => n + x.students.total, 0);
 
-  return `<div class="sec-title">Countries</div>
+  return `<div class="ent-bar">
+      <div><div class="sec-title">Countries</div></div>
+      <div>${appData.countries.map(c => c.coordinator ? '' : entryBtn('country', c.code,
+        'Name a coordinator for ' + c.name, {primary:true, icon:'bi-person-plus'}))
+        .join(' ')}</div>
+    </div>
     <div class="sec-sub">${num(appData.countries.length)} partner countries by the decision of
       ${fmtDate(appData.config.resolution.decidedOn)}, and ${appData.candidates.length} named in
       B Output 3 as candidates to move in. Both lists are as the documents give them, including
@@ -3586,8 +4611,12 @@ function schoolTable(list){
           <div style="font-size:10.5px;color:var(--ink-mute)">${pct(tot, s.capacity)}% full</div></td>
         <td class="n">${s.attendance}%</td>
         <td class="n">${s.teachers}</td>
-        <td><span class="stage-pill ${f.stage}">${f.stage}</span>
-          <div style="font-size:10.5px;color:var(--ink-mute);margin-top:3px">${f.mean} of 4</div></td>
+        <td>${f ? `<span class="stage-pill ${f.stage}">${f.stage}</span>
+            <div style="font-size:10.5px;color:var(--ink-mute);margin-top:3px">${
+              f.mean} of 4</div>`
+          : `<span class="chip grey">${esc(NOT_ASSESSED)}</span>
+            <div style="font-size:10.5px;color:var(--ink-mute);margin-top:3px">no self-study
+              yet</div>`}</td>
       </tr>`;
     }).join('')}</tbody></table>`;
 }
@@ -3598,7 +4627,10 @@ function renderSchools(){
   if (scope) list = list.filter(s => s.country === scope);
   if (schFilter.country) list = list.filter(s => s.country === schFilter.country);
   if (schFilter.level)   list = list.filter(s => s.level === schFilter.level);
-  if (schFilter.stage)   list = list.filter(s => folFor(s.code).stage === schFilter.stage);
+  if (schFilter.stage)   list = list.filter(s => {
+    const f = folFor(s.code);
+    return schFilter.stage === NOT_ASSESSED ? !f : (f && f.stage === schFilter.stage);
+  });
 
   const all = scope ? appData.schools.filter(s => s.country === scope) : appData.schools;
   const sel = (key, label, opts) => `<select data-action="sch-filter" data-k="${key}"
@@ -3608,7 +4640,10 @@ function renderSchools(){
     ${opts.map(o => `<option value="${esc(o)}"${schFilter[key] === o ? ' selected' : ''}>
       ${esc(o)}</option>`).join('')}</select>`;
 
-  return `<div class="sec-title">Partner Schools</div>
+  return `<div class="ent-bar">
+      <div><div class="sec-title">Partner Schools</div></div>
+      <div>${entryBtn('school', null, 'Add a school', {primary:true, icon:'bi-building-add'})}</div>
+    </div>
     <div class="sec-sub">The register behind the 27-school target. Six carry a name because a
       source document gives one; the rest carry a code, because inventing a school name in South
       Sudan is not this system's job. ${scope ? `Showing ${esc(scope)} only — your role is scoped
@@ -3627,7 +4662,8 @@ function renderSchools(){
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px;align-items:center">
       ${sel('country','All countries', appData.countries.filter(c => c.schools).map(c => c.name))}
       ${sel('level','Both levels', ['Primary','Secondary'])}
-      ${sel('stage','Any stage', appData.selfStudy.stages)}
+      ${sel('stage','Any stage', folUnassessed().length
+        ? appData.selfStudy.stages.concat([NOT_ASSESSED]) : appData.selfStudy.stages)}
       <span style="font-size:12px;color:var(--ink-mute)">${list.length} of ${all.length}</span>
     </div>
 
@@ -3655,7 +4691,12 @@ function renderSchoolDetail(code){
           <div style="font-size:11.5px;color:var(--ink-mute);margin-top:2px">
             <span class="mono">${esc(s.code)}</span> · ${esc(s.country)} · ${esc(s.level)}
             ${s.name ? '' : ' · name not given in any source document'}</div></div>
-        <span class="stage-pill ${r2.stage}">${r2.stage}</span></div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="stage-pill ${r2.stage}">${r2.stage}</span>
+          ${entryBtn('school', s.code, 'Edit', {icon:'bi-pencil'})}
+          ${entryBtn('selfstudy', s.code + ':R2', 'Record a self-study',
+            {primary:true, icon:'bi-stars'})}
+        </div></div>
       <div class="card-body">
         <div class="kpi-row" style="margin-bottom:0">
           ${kpiTile('Students', num(tot), `${num(s.enrolledM)} male · ${num(s.enrolledF)} female`)}
@@ -3668,30 +4709,48 @@ function renderSchoolDetail(code){
         </div>
       </div></div>
 
+    ${!r2 ? `<div class="card" style="margin-bottom:18px">
+      <div class="card-head"><h3>Fullness of Life self-study</h3>
+        ${chip(NOT_ASSESSED,'grey')}</div>
+      <div class="card-body"><div class="empty" style="padding:22px 0">
+        <i class="bi bi-stars"></i><h4>No self-study has been run here</h4>
+        <p>This school is on the register but has not assessed itself yet, so it has no stage, no
+          mean and no improvement priorities. It is counted in the ${num(calcSchools().total)}
+          partner schools and left out of the ${calcFoL('R2').records.length} assessed — rather
+          than scored zero, which would make an unassessed school read as the worst in the
+          network.</p>
+        <div style="margin-top:14px">${entryBtn('selfstudy', s.code + ':R2',
+          'Run the first self-study', {primary:true, icon:'bi-stars'})}</div>
+      </div></div></div>` : `
     <div class="panel-grid">
       <div class="card"><div class="card-head"><h3>Fullness of Life self-study</h3>
-        <span style="font-size:11px;color:var(--ink-mute)">${esc(r1.roundLabel)} → ${esc(r2.roundLabel)}</span></div>
+        <span style="font-size:11px;color:var(--ink-mute)">${
+          r1 ? esc(r1.roundLabel) + ' \u2192 ' : ''}${esc(r2.roundLabel)}</span></div>
         <div class="card-body">
           ${D.map(d => {
-            const a = r1.scores[d.key], b = r2.scores[d.key];
+            const b = r2.scores[d.key], a = r1 ? r1.scores[d.key] : null;
             return `<div class="dom">
               <div>${esc(d.label)}</div>
               <div class="twobar">
                 <i class="r2" style="width:${b/4*100}%"></i>
-                <i class="r1" style="width:${a/4*100}%"></i>
+                <i class="r1" style="width:${a === null ? 0 : a/4*100}%"></i>
                 <u style="left:${appData.selfStudy.benchmark/4*100}%"
                   title="Intermediate benchmark"></u></div>
-              <div class="d-sc">${a} → <b>${b}</b></div></div>`;
+              <div class="d-sc">${a === null ? '' : a + ' \u2192 '}<b>${b}</b></div></div>`;
           }).join('')}
           <div style="display:flex;justify-content:space-between;align-items:center;
             margin-top:13px;padding-top:11px;border-top:1px solid var(--line)">
             <div style="font-size:12px;color:var(--ink-mute)">Mean, against the
               ${appData.selfStudy.benchmark}.0 benchmark</div>
             <div style="font:700 20px 'Fraunces',serif;color:var(--${
-              r2.mean >= appData.selfStudy.benchmark ? 'ok' : 'warn'})">${r1.mean} → ${r2.mean}</div>
+              r2.mean >= appData.selfStudy.benchmark ? 'ok' : 'warn'})">${
+              r1 ? r1.mean + ' \u2192 ' : ''}${r2.mean}</div>
           </div>
           <div style="font-size:11px;color:var(--ink-mute);margin-top:7px">
-            The dark bar is round 2, the pale one round 1; the line is the Intermediate benchmark.</div>
+            ${r1 ? 'The dark bar is round 2, the pale one round 1; the line is the Intermediate '
+                 + 'benchmark.'
+                 : 'One round only, so there is no movement to show yet — the line is the '
+                 + 'Intermediate benchmark.'}</div>
         </div></div>
 
       <div class="card"><div class="card-head"><h3>Improvement plan</h3>
@@ -3710,21 +4769,28 @@ function renderSchoolDetail(code){
                   Scored ${p.score} of 4 — ${p.score < 2 ? 'Entry' : p.score < 3 ? 'Developing'
                   : 'Intermediate'} on this domain.</div></div></div>`).join('')}`
           : '<p style="margin:0;color:var(--ink-mute);font-size:12.5px">No plan yet.</p>'}
-
-          <h4 style="font-size:13px;margin:16px 0 8px">Outcomes</h4>
-          <table class="kv">
-            <tr><td>Retention</td><td><strong>${s.retention}%</strong></td></tr>
-            ${s.transition !== null ? `<tr><td>Transition to secondary</td>
-              <td><strong>${s.transition}%</strong></td></tr>` : ''}
-            ${s.graduation !== null ? `<tr><td>Graduation</td>
-              <td><strong>${s.graduation}%</strong></td></tr>` : ''}
-            ${s.university !== null ? `<tr><td>Entered university</td>
-              <td><strong>${num(s.university)}</strong></td></tr>` : ''}
-            <tr><td>School leaders</td><td><strong>${lead.length}</strong> ·
-              ${lead.filter(l => l.consistent).length} applying all four leadership indicators</td></tr>
-          </table>
         </div></div>
-    </div>`;
+    </div>`}
+
+    <div class="card" style="margin-top:18px">
+      <div class="card-head"><h3>Outcomes</h3>
+        ${chip(esc(s.level) + ' school','grey')}</div>
+      <div class="card-body">
+        <table class="kv">
+          <tr><td>Retention</td><td><strong>${s.retention}%</strong></td></tr>
+          ${s.transition !== null ? `<tr><td>Transition to secondary</td>
+            <td><strong>${s.transition}%</strong></td></tr>` : ''}
+          ${s.graduation !== null ? `<tr><td>Graduation</td>
+            <td><strong>${s.graduation}%</strong></td></tr>` : ''}
+          ${s.university !== null ? `<tr><td>Entered university</td>
+            <td><strong>${num(s.university)}</strong></td></tr>` : ''}
+          <tr><td>School leaders</td><td><strong>${lead.length}</strong> ·
+            ${lead.filter(l => l.consistent).length} applying all four leadership indicators</td></tr>
+        </table>
+        <div style="font-size:11px;color:var(--ink-mute);margin-top:9px;line-height:1.55">
+          These come from the school register, not the self-study, so they are here whether or not
+          the school has assessed itself.</div>
+      </div></div>`;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -3758,7 +4824,10 @@ function renderStudents(){
         ticks:{color:T.mute, font:{size:10}, callback:v => v + '%'}}}}});
   });
 
-  return `<div class="sec-title">Students &amp; Enrolment</div>
+  return `<div class="ent-bar">
+      <div><div class="sec-title">Students &amp; Enrolment</div></div>
+      <div>${entryBtn('school', null, 'Add a school', {icon:'bi-building-add'})}</div>
+    </div>
     <div class="sec-sub">Enrolment is held per school, by sex. <strong>No child-level record exists
       anywhere in this system</strong> — there is no name, no date of birth and no identifier to
       hold, which is the simplest way to be safe with data about children in conflict zones.</div>
@@ -3862,7 +4931,13 @@ function renderTeachers(){
     ${opts.map(([v,l]) => `<option value="${esc(v)}"${tchFilter[key] === v ? ' selected' : ''}>
       ${esc(l)}</option>`).join('')}</select>`;
 
-  return `<div class="sec-title">Teachers</div>
+  return `<div class="ent-bar">
+      <div><div class="sec-title">Teachers</div></div>
+      <div>${entryBtn('observation', (SCOPE()
+        ? appData.teachers.find(t => t.country === SCOPE())
+        : appData.teachers[0]).code + ':after', 'Record an observation',
+        {primary:true, icon:'bi-clipboard-check'})}</div>
+    </div>
     <div class="sec-sub">${num(ob.total)} teachers across the partner schools, each observed twice
       on the same five-point instrument — the evidence behind OC1, which asks for the percentage
       increase in the quality of instructional practice.</div>
@@ -3940,7 +5015,7 @@ function renderTeachers(){
     <div class="card"><div class="tbl-scroll"><table class="dt">
       <thead><tr><th>School</th><th>Country</th><th class="n">Teachers</th>
         <th class="n">Trained</th><th class="n">Round 1</th><th class="n">Round 2</th>
-        <th>Movement</th></tr></thead>
+        <th>Movement</th><th></th></tr></thead>
       <tbody>${Object.entries(bySchool).map(([code, ts]) => {
         const s = appData.schools.find(x => x.code === code);
         const b = Math.round(ts.reduce((t,x) => t + x.meanBefore, 0) / ts.length * 100) / 100;
@@ -3955,7 +5030,9 @@ function renderTeachers(){
           <td class="n">${b}</td><td class="n"><strong>${a}</strong></td>
           <td style="min-width:110px">${progressBar(a/4*100, a >= 3 ? 'ok' : 'warn')}
             <div style="font-size:10.5px;color:var(--ink-mute);margin-top:3px">
-              +${Math.round((a-b)/b*1000)/10}%</div></td></tr>`;
+              +${Math.round((a-b)/b*1000)/10}%</div></td>
+          <td class="ef-cell">${editBtn('observation', ts[0].code + ':after',
+            'Record an observation for a teacher here')}</td></tr>`;
       }).join('')}</tbody></table></div></div>`;
 }
 
@@ -3982,7 +5059,13 @@ function renderLeaders(){
                 y:{grid:{display:false}, ticks:{color:T.ink, font:{size:10}}}}}});
   });
 
-  return `<div class="sec-title">School Leaders</div>
+  return `<div class="ent-bar">
+      <div><div class="sec-title">School Leaders</div></div>
+      <div>${entryBtn('leader', (SCOPE()
+        ? appData.leaders.find(l => l.country === SCOPE())
+        : appData.leaders[0]).code, 'Assess a leader',
+        {primary:true, icon:'bi-person-check'})}</div>
+    </div>
     <div class="sec-sub">${num(l.total)} leaders across ${num(appData.schools.length)} schools —
       a head and a deputy at each. OC2 asks what share of them <em>consistently</em> implement
       the four transformative-leadership indicators, which is taken here to mean all four, not
@@ -4045,7 +5128,8 @@ function renderLeaders(){
               ? '<i class="bi bi-check-circle-fill" style="color:var(--ok)"></i>'
               : '<i class="bi bi-dash" style="color:var(--line)"></i>'}</td>`).join('')}
             <td>${x.consistent ? chip('Consistent','ok','bi-check-circle-fill')
-                               : chip(x.appliedCount + ' of 4','grey')}</td></tr>`;
+                               : chip(x.appliedCount + ' of 4','grey')}</td>
+            <td class="ef-cell">${editBtn('leader', x.code, 'Assess this leader')}</td></tr>`;
         }).join('')}</tbody></table></div></div>`;
 }
 
@@ -4078,7 +5162,11 @@ function renderTraining(){
         labels:{color:T.ink, font:{size:10}, boxWidth:10, padding:9}}}}});
   });
 
-  return `<div class="sec-title">Stakeholder Training</div>
+  return `<div class="ent-bar">
+      <div><div class="sec-title">Stakeholder Training</div></div>
+      <div>${entryBtn('stakeholder', null, 'Enrol a stakeholder',
+        {primary:true, icon:'bi-person-plus'})}</div>
+    </div>
     <div class="sec-sub">Project 2 — teachers, school leaders and steering committee members in
       ongoing training to deploy transformative education. ${esc(proj.objective)}</div>
 
@@ -4185,7 +5273,11 @@ function renderFol(){
         scales:{y:{grid:{color:T.line}, ticks:{color:T.mute, font:{size:10}, precision:0}}}}});
   });
 
-  return `<div class="sec-title">Fullness of Life Framework</div>
+  return `<div class="ent-bar">
+      <div><div class="sec-title">Fullness of Life Framework</div></div>
+      <div>${entryBtn('selfstudy', appData.schools[0].code + ':R2',
+        'Record a self-study', {primary:true, icon:'bi-stars'})}</div>
+    </div>
     <div class="sec-sub">POOA v5's OP3 asks how many partner schools are "consistently receiving
       Fullness of Life Framework support and moving from Entry to Advanced", and OC3 measures the
       share reaching the <strong>${esc(B)}.0 Intermediate</strong> benchmark. Every school was
@@ -4245,13 +5337,21 @@ function renderFol(){
         <table class="heat">
           <thead><tr><th class="sc">School</th>
             ${D.map(d => `<th title="${esc(d.label)}">${esc(d.label.split(' ')[0])}</th>`).join('')}
-            <th>Mean</th><th class="sc">Stage</th></tr></thead>
+            <th>Mean</th><th class="sc">Stage</th><th></th></tr></thead>
           <tbody>${appData.schools.map(s => {
             const r = folFor(s.code);
+            if (!r) return `<tr><td class="sc">${esc(s.name || s.code)}</td>
+              <td colspan="${D.length + 1}" class="na">${esc(NOT_ASSESSED)} — no self-study has
+                been run here yet</td>
+              <td class="sc"><span class="chip grey">${esc(NOT_ASSESSED)}</span></td>
+              <td class="ef-cell">${editBtn('selfstudy', s.code + ':R2',
+                'Run the first self-study for this school')}</td></tr>`;
             return `<tr><td class="sc">${esc(s.name || s.code)}</td>
               ${D.map(d => `<td class="${heatClass(r.scores[d.key])}">${r.scores[d.key]}</td>`).join('')}
               <td class="${heatClass(r.mean)}"><strong>${r.mean}</strong></td>
-              <td class="sc"><span class="stage-pill ${r.stage}">${r.stage}</span></td></tr>`;
+              <td class="sc"><span class="stage-pill ${r.stage}">${r.stage}</span></td>
+              <td class="ef-cell">${editBtn('selfstudy', s.code + ':R2',
+                'Record this school\u2019s self-study')}</td></tr>`;
           }).join('')}</tbody></table></div></div></div>
 
     <div class="panel-grid">
@@ -4382,8 +5482,10 @@ function renderSafeguarding(){
   const f2 = calcFoL('R2');
   const D = appData.selfStudy.domains;
   const safe = D.find(d => d.key === 'safe'), care = D.find(d => d.key === 'care');
-  const belowSafe = appData.schools.filter(s => folFor(s.code).scores.safe < 3);
-  const belowCare = appData.schools.filter(s => folFor(s.code).scores.care < 3);
+  const assessed = appData.schools.filter(s => folAssessed(s.code));
+  const belowSafe = assessed.filter(s => folFor(s.code).scores.safe < 3);
+  const belowCare = assessed.filter(s => folFor(s.code).scores.care < 3);
+  const unassessed = folUnassessed();
   const AS = appData.plans.pooa5.assumptions;
 
   return `<div class="sec-title">Safeguarding &amp; Student Care</div>
@@ -4432,6 +5534,12 @@ function renderSafeguarding(){
             <th>Status</th></tr></thead>
           <tbody>${appData.schools.map(s => {
             const r = folFor(s.code);
+            if (!r) return `<tr class="clickable" data-action="go" data-view="school-detail"
+              data-meta="${esc(s.code)}">
+              <td><div class="sch-name">${esc(s.name || s.code)}</div></td>
+              <td>${esc(s.country)}</td>
+              <td class="n na">—</td><td class="n na">—</td>
+              <td>${chip(NOT_ASSESSED,'grey')}</td></tr>`;
             const low = r.scores.safe < 3 || r.scores.care < 3;
             return `<tr class="clickable" data-action="go" data-view="school-detail"
               data-meta="${esc(s.code)}">
@@ -4501,7 +5609,11 @@ function renderCulture(){
           y:{grid:{display:false}, ticks:{color:T.ink, font:{size:10}}}}}});
   });
 
-  return `<div class="sec-title">Culture &amp; Rule of Life</div>
+  return `<div class="ent-bar">
+      <div><div class="sec-title">Culture &amp; Rule of Life</div></div>
+      <div>${entryBtn('culture', appData.culture.staff[0].code,
+        'Record an employee', {primary:true, icon:'bi-person-check'})}</div>
+    </div>
     <div class="sec-sub">Project 3 of three. This one is about the organisation rather than the
       schools: ${esc(proj.objective)}</div>
 
@@ -4717,7 +5829,11 @@ function renderFunding(){
       options:{scales:{y:{grid:{color:T.line}, ticks:{color:T.mute, font:{size:10}}}}}});
   });
 
-  return `<div class="sec-title">Funding &amp; Budgets</div>
+  return `<div class="ent-bar">
+      <div><div class="sec-title">Funding &amp; Budgets</div></div>
+      <div>${entryBtn('finance', null, 'Record money raised',
+        {primary:true, icon:'bi-cash-coin'})}</div>
+    </div>
     <div class="sec-sub">Two financial figures exist in the source documents, both in A §5.2 —
       the Data Collection and Delivery Plan. No logframe carries a budget line.</div>
 
@@ -4800,11 +5916,21 @@ const reportState = {open:null, ctx:{}, showSources:false, submitted:{}};
 function gapNote(ids){
   const list = (ids || []).map(id => appData.gaps.find(g => g.id === id)).filter(Boolean);
   if (!list.length) return '';
-  return list.map(g => `<div class="d-gap">
-    <b>Not reported — ${esc(g.where)} is blank in the source document.</b>
-    ${esc(g.detail)}
-    <span class="d-q">${esc(g.question)}</span>
-    <span class="d-gid">${esc(g.id)}</span></div>`).join('');
+  return list.map(g => g.answer
+    /* Answered by a person, so the section prints the answer — attributed and
+       dated, because a reader is entitled to know it was supplied rather than
+       found in the source document. */
+    ? `<div class="d-ans">
+        <b>${esc(g.where)} was blank in the source document. This was supplied.</b>
+        ${esc(g.answer.text)}
+        <span class="d-by">Answered by ${esc(g.answer.by)} on ${esc(g.answer.on)}${
+          g.answer.source ? ' · source: ' + esc(g.answer.source) : ''}</span>
+        <span class="d-gid">${esc(g.id)}</span></div>`
+    : `<div class="d-gap">
+        <b>Not reported — ${esc(g.where)} is blank in the source document.</b>
+        ${esc(g.detail)}
+        <span class="d-q">${esc(g.question)}</span>
+        <span class="d-gid">${esc(g.id)}</span></div>`).join('');
 }
 
 const dTable = (head, rows, foot) => `<table class="d-tbl">
@@ -5043,7 +6169,8 @@ function blockFor(key, c){
           c.schools.map(s => {
             const f = folFor(s.code);
             return [esc(s.name || s.code), esc(s.level), num(s.enrolledM + s.enrolledF),
-              num(s.teachers), esc(f.stage) + ' (' + f.mean + ')'];
+              num(s.teachers),
+              f ? esc(f.stage) + ' (' + f.mean + ')' : '<i>' + esc(NOT_ASSESSED) + '</i>'];
           }),
           ['Total', '', num(c.students.total), num(c.teachers.length), ''])
       : `<p class="d-small">No partner school is recorded in this country. B row 1 names it a
@@ -5474,6 +6601,9 @@ function reportCtx(templateId, periodId, metaCode){
     c.school = appData.schools.find(s => s.code === code) || appData.schools[0];
     c.r1 = folFor(c.school.code, 'R1');
     c.r2 = folFor(c.school.code, 'R2');
+    /* A school with no self-study has no document to produce. Saying so is the
+       report; a template filled with dashes would look like a finished one. */
+    c.unassessed = !c.r2;
     c.schoolTeachersTrained = appData.teachers
       .filter(x => x.school === c.school.code && x.trained).length;
   }
@@ -5505,6 +6635,21 @@ function generateReport(templateId, periodId, metaCode){
   const header = `<table class="d-hdr"><tbody>${(t.header || []).map(h =>
     `<tr><th>${esc(h.label)}</th><td>${esc(reportHeaderValue(h.path, c))}</td></tr>`)
     .join('')}</tbody></table>`;
+
+  if (c.unassessed){
+    return `<h1>${esc(t.docTitle)}</h1>
+      <div class="d-sub">${esc(appData.config.org.name)} · ${esc(c.period.label)}</div>
+      ${header}
+      <div class="d-gap"><b>There is no self-study to report for
+        ${esc(c.school.name || c.school.code)}.</b>
+        The school is on the partner register and has an enrolment, teachers and outcome rates —
+        but it has never assessed itself against the Fullness of Life Framework, so it has no
+        domain scores, no stage and no improvement priorities.
+        <span class="d-q">Run the self-study with the school, then generate this again. Nothing
+        here can be filled in on its behalf.</span></div>
+      <div class="d-foot"><span>${esc(appData.config.org.name)}</span>
+        <span>Generated ${fmtDate(appData.config.today)} from Eval360</span></div>`;
+  }
 
   const body = t.sections.map(s => {
     const H = s.no && s.no.includes('.') ? 'h3' : 'h2';
@@ -5706,6 +6851,12 @@ const DOC_CSS = `
   .d-gap .d-q{display:block;margin-top:7px;font-style:italic;color:#6a3030}
   .d-gap .d-gid{position:absolute;top:9px;right:11px;font:700 9px 'Courier New',monospace;
     color:#a32828;letter-spacing:.06em}
+  .d-ans{background:#eaf4ee;border-left:3px solid #1d7a4f;padding:10px 13px;margin:10px 0;
+    font-size:12px;position:relative}
+  .d-ans b{display:block;color:#1d7a4f;margin-bottom:3px}
+  .d-ans .d-by{display:block;margin-top:7px;font-size:10.5px;color:#3c5162;font-style:italic}
+  .d-ans .d-gid{position:absolute;top:9px;right:11px;font:700 9px 'Courier New',monospace;
+    color:#1d7a4f;letter-spacing:.06em}
   .d-quote{border-left:3px solid #c9741f;padding:2px 0 2px 12px;margin:0 0 9px;font-style:italic}
   .d-quote span{display:block;font-style:normal;font-size:10.5px;color:#6d8396;margin-top:3px}
   .d-small{font-size:11.5px;color:#3c5162;margin:8px 0 12px}
@@ -5845,6 +6996,19 @@ function renderDataQuality(){
         checks whether a figure means what it says, so everything below is this system marking its
         own homework — and saying so.</div></div>
 
+    ${appData.entryLog.length ? `<div class="banner ok">
+      <i class="bi bi-arrow-up-right-circle-fill"></i>
+      <div><strong>${Q.cells.filter(c => c.moved).length} verdict${
+        Q.cells.filter(c => c.moved).length === 1 ? ' has' : 's have'} moved because the system
+        is being used.</strong> Integrity was the weakest measure here because nothing recorded
+        who changed a figure or when. ${appData.entryLog.length} change${
+        appData.entryLog.length === 1 ? '' : 's'} ${appData.entryLog.length === 1
+        ? 'has' : 'have'} now been recorded through a form, each with a name and a time against
+        it. The seeded figures still have neither, which is why those registers read
+        <em>partial</em> rather than <em>strong</em>.
+        <button class="btn btn-sm" data-action="go" data-view="users"
+          style="margin-left:6px">The audit trail</button></div></div>` : ''}
+
     <div class="kpi-row">
       ${kpiTile('Registers assessed', String(appData.registers.length),
         `against ${appData.dqMeasures.length} measures each · ${Q.cells.length} verdicts`)}
@@ -5951,11 +7115,16 @@ function renderQualityCheck(){
      list:Q.findings.filter(f => f.state === 'open')},
     {key:'needs-client', title:'Blanks only B2THEWORLD can fill',
      sub:'Each is a sentence or a table that exists somewhere in the organisation and is not yet '
-       + 'in the plan. B row 9 appears in both registers and is counted once, as a blank.',
+       + 'in the plan. Answer one and every report section holding its question prints the '
+       + 'answer instead. B row 9 appears in both registers and is counted once, as a blank.',
      list:Q.findings.filter(f => f.state === 'needs-client')},
+    {key:'answered',     title:'Blanks that have been answered',
+     sub:'Supplied by a person, recorded against a name and a date, and printed in the reports '
+       + 'that were holding the question.',
+     list:Q.findings.filter(f => f.kind === 'blank' && f.answered)},
     {key:'decided',      title:'Differences with a decision on the record',
      sub:'Settled, dated and attributed — and reversible on one screen.',
-     list:Q.findings.filter(f => f.state === 'decided')}
+     list:Q.findings.filter(f => f.state === 'decided' && f.kind === 'conflict')}
   ];
 
   return `<div class="sec-title">Plan Quality Check</div>
@@ -5984,7 +7153,7 @@ function renderQualityCheck(){
           <div><b>${Q.conflictsPct}%</b><span>differences settled</span>
             <i>${Q.conflictsSettled} of ${Q.conflictsTotal}</i></div>
           <div><b>${Q.blanksPct}%</b><span>blanks filled</span>
-            <i>0 of ${Q.blanksTotal}</i></div>
+            <i>${Q.blanksAnswered} of ${Q.blanksTotal}</i></div>
         </div>
       </div>
       <div class="card"><div class="card-head"><h3>How the score is built</h3>
@@ -6004,9 +7173,13 @@ function renderQualityCheck(){
           <p style="margin:9px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-soft)">
             A recorded decision satisfies its requirement, because a plan with a dated, attributed
             choice in it is as settled as a plan can be — even when the choice was hard. That is
-            why the differences score ${Q.conflictsPct}% and the blanks score ${Q.blanksPct}%:
-            ${Q.needsClient} of the ${Q.open + Q.needsClient} outstanding findings are blanks, and
-            no amount of work inside this system will close one of them.</p>
+            why the differences score ${Q.conflictsPct}% and the blanks score ${Q.blanksPct}%.
+            ${Q.needsClient
+              ? `${Q.needsClient} of the ${Q.open + Q.needsClient} outstanding findings are
+                 blanks. No amount of work inside this system will close one — but someone from
+                 B2THEWORLD can answer it on this screen, and the section of every report that
+                 has been printing the question then prints the answer instead.`
+              : `Every blank now carries an answer, recorded against a name and a date.`}</p>
         </div></div>
     </div>
 
@@ -6043,6 +7216,10 @@ function renderQualityCheck(){
                 ? `<button class="btn btn-sm ${f.state === 'decided' ? 'btn-ghost' : 'btn-primary'}"
                     data-action="go" data-view="${esc(f.route)}">
                     ${f.state === 'decided' ? 'Review' : 'Decide'}</button>`
+                : f.kind === 'blank'
+                ? `${entryBtn('gap', f.id, f.answered ? 'Change the answer' : 'Answer it',
+                     {primary: !f.answered, icon: f.answered ? 'bi-pencil' : 'bi-pencil-square'})}
+                   ${f.answered ? '' : `<div class="qf-noroute">${esc(f.routeLabel)}</div>`}`
                 : `<div class="qf-noroute">${esc(f.routeLabel)}</div>`}
             </div></div>`).join('')}
         </div></div>`).join('')}
@@ -6661,6 +7838,37 @@ function renderUsers(){
         permission for every screen, so adding a screen does not silently lock everyone out of it.
         A country role additionally sees only its own country's figures wherever a screen has a
         country to filter by.</div>
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <div class="card-head"><h3>Audit trail</h3>
+        ${chip(appData.entryLog.length + (appData.entryLog.length === 1
+          ? ' change' : ' changes'), appData.entryLog.length ? 'ok' : 'grey')}</div>
+      ${appData.entryLog.length
+        ? `<div class="tbl-scroll"><table class="dt">
+            <thead><tr><th>When</th><th>Who</th><th>Register</th><th>What</th></tr></thead>
+            <tbody>${appData.entryLog.slice(0, 40).map(e => `<tr>
+              <td style="white-space:nowrap">${esc(e.stamp)}
+                <div style="font-size:10.5px;color:var(--ink-mute)">${esc(e.time)}</div></td>
+              <td><strong>${esc(e.by)}</strong>
+                <div style="font-size:10.5px;color:var(--ink-mute)">${esc(e.role)}</div></td>
+              <td>${chip(e.register,'grey')}</td>
+              <td>${esc(e.what)}
+                <div style="font-size:11px;color:var(--ink-mute);margin-top:2px">${
+                  esc(e.detail)}</div></td>
+            </tr>`).join('')}</tbody></table></div>`
+        : `<div class="card-body"><div class="empty" style="padding:24px 0">
+            <i class="bi bi-journal-text"></i><h4>Nothing recorded yet</h4>
+            <p>Every figure currently in the system arrived with the seed, which is why the Data
+              Quality Plan marks integrity down: nothing records who set a figure or when. Record
+              anything through a form — a self-study, an observation, money raised — and it
+              appears here with your name and the time against it.</p></div></div>`}
+      <div class="card-body" style="padding-top:10px;font-size:11.5px;color:var(--ink-mute);
+        line-height:1.6">
+        The log is never trimmed. A trimmed audit trail is worse than none, because it looks
+        complete and is not. It lives in memory for this session only — there is no browser
+        storage and no database behind this demonstration, which the Configuration screen
+        says plainly.</div>
     </div>`;
 }
 
@@ -6854,6 +8062,12 @@ let guideCharts = [];
 function captureView(view, meta, prefix){
   const r = VIEW_RENDERERS[view];
   if (!r) return '';
+  /* Renderers read currentView to decide whether this role may write to the
+     screen. The guide calls them directly, so without this a figure of the
+     Fullness of Life screen could carry the access level of whatever screen
+     the reader happened to be on when they pressed build. */
+  const wasView = currentView, wasMeta = currentMeta;
+  currentView = view; currentMeta = meta;
   const real = mountChart;
   const seen = [];
   globalThis.mountChart = (id, cfg) => { seen.push({id, cfg: chartConfig(cfg)}); };
@@ -6865,6 +8079,7 @@ function captureView(view, meta, prefix){
   } finally {
     globalThis.mountChart = real;
     pendingMounts = [];
+    currentView = wasView; currentMeta = wasMeta;
   }
   /* Canvas ids must be unique across the whole document, so each figure gets
      its own prefix — in the markup and in the configuration together. */
@@ -7385,6 +8600,105 @@ function guideChapters2(){
   ];
 }
 
+/* The chapter on putting figures in, which is most of what anyone does. */
+function guideChapterEntry(){
+  const C = appData.config;
+  const b = v => `<b>${esc(v)}</b>`;
+  const forms = [
+    ['A partner school', 'Partner Schools, or Students & Enrolment',
+     'Country, level, enrolment by sex, places, teachers and the four rates. It arrives with no '
+     + 'self-study and no observed teachers, so it reads as unassessed rather than as zero.'],
+    ['A self-study round', 'Fullness of Life, or any school’s own record',
+     'Six domain scores, 1 to 4. The mean, the stage and the two improvement priorities are all '
+     + 'derived from them — you cannot type a stage.'],
+    ['A classroom observation', 'Teachers',
+     'Five domains, 1 to 4, plus who observed and when. The seeded observations have neither, '
+     + 'which is exactly what the Data Quality Plan marks them down for.'],
+    ['A school leader', 'School Leaders',
+     'The four OC2 indicators as yes or no. All four is what this system reads as '
+     + '“consistently implements”.'],
+    ['A stakeholder', 'Stakeholder Training',
+     'Country, kind, cohort, status, sessions, certificate, mentoring.'],
+    ['An employee’s practices', 'Culture & Rule of Life',
+     'The five observable practices of Project 3. Employees are held by code; no staff member is '
+     + 'named on that register.'],
+    ['A country', 'Countries',
+     'Status, year joined, coordinator, context. This is where the two countries with no '
+     + 'coordinator named get one.'],
+    ['Money raised', 'Funding & Budgets',
+     'A month, an amount, and optionally a country envelope. It reaches the month, the envelope '
+     + 'and the total together.'],
+    ['An answer to a blank', 'Plan Quality Check',
+     'The one that changes the most. See below.']
+  ];
+  return {title:'Recording what you know',
+   sub:'Nine forms, one audit trail, and the one entry that changes a report.',
+   body:[
+    {p:`Everything in this system can be recorded by a person as well as seeded. A form writes to
+      one register and nothing else; every screen, chart and report that uses that register
+      re-reads it, so a figure you type appears everywhere it belongs without anything being
+      rebuilt or refreshed.`},
+    {h:'The nine forms'},
+    {table:[
+      ['Form', 'Where', 'What it takes'],
+      ...forms.map(f => [b(f[0]), f[1], f[2]])
+    ]},
+    {h:'Three habits the forms have'},
+    {ol:[
+      `${b('A judgement is chosen, not typed.')} The 1–4 scales are buttons, because you
+       cannot score 3.7 on a four-point rubric. The validator bounds them anyway, so the only
+       four-point score it will accept is a four-point score — whatever the widget sends.`,
+      `${b('They refuse what a register should not hold.')} A certificate without a completed
+       course is refused, and says that it is the kind of thing an audit asks about. A primary
+       school is not allowed a graduation rate. A school with nobody on the register is not a
+       partner school yet. Nothing is written while any of that is being refused.`,
+      `${b('They say what moved, not that they saved.')} Record a self-study and the message tells
+       you the school's new mean, its stage, and what the network figure now reads. Record money
+       and it tells you the new total, the percentage, and how many envelopes are met.`
+    ]},
+    {h:'Every write is logged'},
+    {p:`The audit trail sits on ${b('Users & Roles')}: what changed, which register, who did it
+      and at what time. It is never trimmed, because a trimmed audit trail is worse than none
+      — it looks complete and is not.`},
+    {note:['This is the one data-quality verdict the system can earn', `Integrity is the weakest
+      measure on the Data Quality Plan, at the start, because nothing recorded who set a figure or
+      when. Record something through a form and that register's verdict moves from weak to
+      partial, with a note saying how many changes it is based on — and saying that the
+      seeded figures still have neither a name nor a time, which is why it reads <em>partial</em>
+      rather than <em>strong</em>. The screen announces the change rather than quietly improving.`]},
+    {fig:['users','The audit trail. Before anybody records anything it says so, and explains why '
+      + 'that is what the Data Quality Plan is marking down.', {h:660}]},
+    {h:'Answering a blank'},
+    {p:`Eleven sections of the source documents were never filled in. This system has never
+      filled one in and never will on its own — but a person from B2THEWORLD can, on the
+      ${b('Plan Quality Check')} screen, and that single entry does four things at once:`},
+    {ol:[
+      `Every report section that has been printing the question prints the ${b('answer')} instead,
+       attributed and dated, in a green block that says it was supplied rather than found in the
+       source document.`,
+      `That section stops counting as blocked, so the report's completeness percentage goes up.`,
+      `The finding moves out of ${b('Blanks only B2THEWORLD can fill')} and into
+       ${b('Blanks that have been answered')}.`,
+      `The plan score moves, because the blanks half of it is no longer zero.`
+    ]},
+    {p:`Replacing an answer is logged rather than erasing the old one. And the form pre-fills
+      nothing: there is no suggested wording, because a plausible answer is worse than an honest
+      short one and the report prints whichever it is given.`},
+    {fig:['quality','Plan Quality Check. A difference gets a Decide button to the reconciliation; '
+      + 'a blank gets Answer it, and nothing else, because nothing inside this system can close '
+      + 'one.', {h:680}]},
+    {h:'What a role may write'},
+    {p:`A role with read access to a screen gets no entry button on it — it says
+      ${b('read-only for your role')} where the button would be. Switch the role in the top bar
+      and the same screen gains or loses its forms.`},
+    {note:['Nothing is saved anywhere', `This demonstration has no browser storage and no
+      database. Everything recorded lives in memory while the tab is open; a reload returns every
+      figure to the seed, and so does Reseed on the Configuration screen. That is deliberate for a
+      demonstration — a real deployment persists, and the Configuration screen says so where
+      somebody might assume otherwise.`]}
+   ]};
+}
+
 function guideQuickRef(){
   const C = appData.config, RES = C.resolution, P = calcPlanScore();
   const b = v => `<b>${esc(v)}</b>`;
@@ -7438,10 +8752,28 @@ function guideQuickRef(){
    ]};
 }
 
+/* The chapters, in order, numbered by position. Nothing carries its own number:
+   inserting a chapter used to mean renumbering every one after it and fixing
+   every "see chapter 4" by hand, and one of them was always missed. */
+function guideAllChapters(){
+  const list = guideChapters()
+    .concat([guideChapterEntry()])
+    .concat(guideChapters2())
+    .concat([guideQuickRef()]);
+  list.forEach((ch, i) => { ch.no = i + 1; });
+  return list;
+}
+/* "chapter 5", resolved from the title, so a cross-reference cannot go stale. */
+function chRef(titleFragment){
+  const list = guideAllChapters();
+  const ch = list.find(x => x.title.toLowerCase().includes(titleFragment.toLowerCase()));
+  return ch ? 'chapter ' + ch.no : 'the relevant chapter';
+}
+
 /* ── Assemble the document ───────────────────────────────────────────────── */
 function buildGuideDocument(onProgress){
   guideCharts = [];
-  const chapters = guideChapters().concat(guideChapters2()).concat([guideQuickRef()]);
+  const chapters = guideAllChapters();
   const C = appData.config;
   const figs = chapters.reduce((t,ch) => t + ch.body.filter(x => x.fig).length, 0);
   let done = 0;
@@ -7517,9 +8849,12 @@ ${guideDocCss()}
   <h2>What is in this guide</h2>
   ${toc}
   <div class="g-note" style="margin-top:22px"><strong>Where to start</strong>
-    <div>Chapter 1 explains the problem this system was built for, and chapter 4 — Plan
-    Reconciliation — explains almost everything else about how it behaves. Read those two and the
-    rest will make sense in any order. Chapter 14 is a single page to keep beside the screen.</div>
+    <div>Chapter 1 explains the problem this system was built for, and ${
+    chRef('Plan Reconciliation')} explains almost everything else about how it behaves. Read those
+    two and the rest will make sense in any order. ${
+    chRef('One page to keep').replace('chapter', 'Chapter')} is a single page to keep beside the
+    screen, and ${chRef('Recording what you know')} is the one to read before you type anything
+    into it.</div>
   </div>
   <p class="g-gen">Generated by Eval360 on ${fmtDate(C.today)} from the data in the system.
     Nothing in this guide is a screenshot: every figure is the live screen, rendered with the
@@ -7676,7 +9011,7 @@ function guideBuild(){
       });
       guideState.built = {html, at:nowStamp(),
         figures:guideCharts.length, bytes:html.length,
-        chapters:guideChapters().length + guideChapters2().length + 1};
+        chapters:guideAllChapters().length};
       guideState.progress = null;
       showView('guide');
       toast(`Guide built — ${guideState.built.chapters} chapters, `
@@ -7708,7 +9043,7 @@ function guideDownload(){
 }
 
 function renderGuide(){
-  const chapters = guideChapters().concat(guideChapters2()).concat([guideQuickRef()]);
+  const chapters = guideAllChapters();
   const figs = chapters.reduce((t,ch) => t + ch.body.filter(x => x.fig).length, 0);
   const B = guideState.built, P = guideState.progress;
 
@@ -7916,6 +9251,8 @@ document.addEventListener('click', e => {
   if (a === 'guide-build')   guideBuild();
   if (a === 'guide-open')    guideOpen();
   if (a === 'guide-download') guideDownload();
+  if (a === 'entry-open')    openEntryForm(t.dataset.form, t.dataset.meta);
+  if (a === 'entry-submit')  entrySubmit();
   if (a === 'reseed'){
     seedAll();
     appData.checkSnapshot = runConsistencyChecks();
@@ -7948,7 +9285,14 @@ document.addEventListener('click', e => {
     }
   }
 });
+/* The 1–4 and yes/no pills are labels wrapping a radio, so the highlight has
+   to follow the checked input rather than a click target. */
 document.addEventListener('change', e => {
+  if (e.target && e.target.type === 'radio'){
+    const group = e.target.closest('.ef-scale, .ef-yn');
+    if (group) group.querySelectorAll('label').forEach(l =>
+      l.classList.toggle('on', !!l.querySelector('input:checked')));
+  }
   const t = e.target.closest('[data-action]');
   if (!t) return;
   if (t.dataset.action === 'sch-filter'){ schFilter[t.dataset.k] = t.value; showView('schools'); }
@@ -8013,6 +9357,12 @@ function buildPeriodSelector(){
    ═══════════════════════════════════════════════════════════════════════════ */
 (function init(){
   seedAll();
+  /* Captured once, before anybody can type anything. A check that wants to
+     state a seed figure states it from here; a check that wants to assert a
+     rule asserts it against the live registers. Mixing the two is what makes
+     a consistency chip go red for no reason the first time someone uses the
+     system. */
+  appData.seedFacts = captureSeedFacts();
   const r = appData.checkSnapshot = runConsistencyChecks();
   document.getElementById('check-chip-text').textContent =
     r.failures.length ? `${r.failures.length} of ${r.total} checks failed`

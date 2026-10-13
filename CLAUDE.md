@@ -1,6 +1,6 @@
 # B2THEWORLD — Eval360 demonstration · CLAUDE.md
 
-Last updated: 2026-10-13 — all 11 stages complete
+Last updated: 2026-10-13 — all 11 stages complete, plus data entry
 
 > **Read [docs/SOURCE_RECONCILIATION.md](docs/SOURCE_RECONCILIATION.md) before writing a line of
 > code.** Three source documents disagree in nine places and leave nine sections blank. The
@@ -42,8 +42,8 @@ serve, and `deploy_pull.sh` rebuilds them when it can, so a stale copy self-corr
 
 ## State — all 11 stages done
 
-26 screens, 11 test suites, **471 assertions**, 37/37 internal consistency checks.
-Suites live in the session scratchpad as `b1.js`–`b11.js`; each runs the page under `node vm`
+26 screens, 12 test suites, **530 assertions**, 52/52 internal consistency checks.
+Suites live in the session scratchpad as `b1.js`–`b12.js`; each runs the page under `node vm`
 against a stub DOM and probes rendered output, not the seed.
 
 | Stage | What landed |
@@ -58,6 +58,45 @@ against a stub DOM and probes rendered output, not the seed.
 | 9 | Report Centre + all six generators, print/.doc/CSV |
 | 10 | Data Quality Plan · Plan Quality Check · Ask Eval360 |
 | 11 | Inbox · Users & Roles · Configuration · the self-generating guide |
+| — | **Data entry**: nine forms, an audit trail, and the gap-answering loop |
+
+---
+
+## Data entry
+
+A form kit (`4c`) and nine forms (`4d`). Two rules:
+
+1. **A form writes to `appData` and nothing else.** Screens re-derive, so a typed figure reaches
+   every table, chart and report in the same instant. `entrySubmit()` re-runs the checks and
+   re-renders the current view.
+2. **Every write is logged** to `appData.entryLog` with a name and a timestamp.
+
+```
+ENTRY_FORMS[key] = { build(meta) → {title, intro, fields, values, submit, after},
+                     save(values, meta) → {message, view?, meta?, errors?} }
+```
+
+`openEntryForm(key, meta)` → modal; `data-action="entry-submit"` → `formRead()` validates, then
+`save()`. Field types: text, number, select, textarea, date, **score** (1–4 pills), **yesno**,
+static, heading. `formRead()` bounds a score to 1–4 and a yesno to 0–1 **regardless of what the
+widget sends** — the validator does not trust its own input. `entryBtn()` / `editBtn()` return
+nothing but a "read-only for your role" chip when `access(currentView) === 'read'`.
+
+### The gap-answering loop — the point of the whole build
+
+`appData.gaps[i].answer = {text, source, by, on}`, set only by a person on Plan Quality Check.
+One entry moves five things at once: `gapNote()` prints a green attributed block instead of the
+red question · `calcCompleteness()` stops counting the section as blocked · `calcPlanFindings()`
+marks it `decided` · the blanks half of `calcPlanScore()` leaves zero · the dashboard and inbox
+counts follow. **Nothing pre-fills an answer**, ever.
+
+### Integrity is the one verdict the system can earn
+
+`calcDataQuality()` recomputes the `integrity` cell per register from `entriesFor(key).length`:
+weak → partial once anything has been recorded through a form, with a note saying how many
+changes it is based on and that the seeded figures still have no author. Registers a form may
+write to that the matrix does not assess are declared in `ENTRY_UNASSESSED_REGISTERS` — a
+consistency check catches a register-key typo, which would otherwise make a write silently inert.
 
 ### Things a green suite did not catch, and the read did
 
@@ -80,6 +119,30 @@ Kept as a record, because every one was a figure that was *true* and still misle
   reconciliation item is deduped; a `kind:'gap'` item never sits in the "awaiting a ruling"
   column.
 - A double rounding turned 45.45 into 46 by way of 45.5.
+
+### Found by the data-entry work
+
+- **`folFor()` returns undefined for a school with no self-study**, and eight call sites
+  dereferenced it. A new school crashed the schools table, the heat matrix, safeguarding, the
+  country report and a consistency check. Fixed with `folAssessed()` / `NOT_ASSESSED` and an
+  honest "not assessed" state everywhere — *not* a record of zeros, which would make an
+  unassessed school read as the worst in the network. `calcFolMovement()` now drops schools
+  without both rounds rather than counting them as no change.
+- **Eleven consistency checks asserted the seed, not an invariant** — "27 partner schools",
+  "Students = 7,963", "10 of 27 at the benchmark". Adding one school turned the chip red, which
+  teaches everyone to ignore it. All converted: the invariant is asserted against the live
+  registers, and the seed figure is stated separately against `appData.seedFacts`, captured once
+  at load by `captureSeedFacts()` and labelled "Seed figure:". **This is the second time this
+  project has paid for that mistake — see the FPC build.**
+- **`captureView()` rendered guide figures without setting `currentView`**, so a figure could
+  carry the access level of whatever screen the reader was on when they pressed build. It now
+  sets and restores both `currentView` and `currentMeta`.
+- **Guide chapter numbers were typed into each chapter**, and `"chapter 4 — Plan Reconciliation"`
+  was typed into two places. Inserting the data-entry chapter would have broken all of it.
+  Numbers now come from list position (`guideAllChapters()`) and cross-references resolve by
+  title (`chRef()`).
+- The plan-score band label asserted "the differences are decided, the blanks are not", which
+  stops being true as blanks get answered. Now computed from both halves.
 
 ---
 
@@ -148,10 +211,12 @@ There is no DOM here. Suites run under `node vm` against a stub document. A gree
 proof — read the rendered output as a reader would, every time. Everything in the list above was
 found that way, after the suite was green.
 
-Two harness habits that save time: the product escapes everything it prints, so compare against
-the escaped form or every title with an ampersand reads as a failure; and `scripts/build-guide.js`
-is itself a test — it renders all 27 figures and throws if a chapter names a screen that no longer
-exists.
+Three harness habits that save time: the product escapes everything it prints, so compare against
+the escaped form or every title with an ampersand reads as a failure; `scripts/build-guide.js` is
+itself a test — it renders every figure and throws if a chapter names a screen that no longer
+exists; and to test a *form*, give the stub DOM a `FIELDS` map that `getElementById('f-x')` and
+`querySelector('input[name="x"]:checked')` both read from, then call `formRead()` and `save()` —
+`b12.js` drives all nine forms that way, including the ones that should be refused.
 
 ---
 

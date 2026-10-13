@@ -77,7 +77,7 @@ globalThis.__facts = () => ({
   gaps: appData.gaps.length,
   reports: REPORT_CARDS.length,
   screens: NAV.flatMap(g => g.items).length,
-  chapters: guideChapters().length + guideChapters2().length + 1,
+  chapters: guideAllChapters().length,
   teachers: calcObservation().total
 });`, ctx);
 
